@@ -1,0 +1,9 @@
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/rebuild_cache.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/edit_cache.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/BelkanSG.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/GLUILib.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/Belkan.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/obj3DLib.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/motorLib.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/modelosBelkanLib.dir
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles/comportamientosLib.dir
