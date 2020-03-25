@@ -32,7 +32,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		// Estoy en el nivel 2
 		cout << "Aún no implementado el nivel 2" << endl;
 	}
-
+	accion = plan.front();
   return accion;
 }
 
@@ -45,7 +45,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 			      return pathFinding_Profundidad(origen,destino,plan);
 						break;
 		case 2: cout << "Busqueda en Anchura\n";
-			      // Incluir aqui la llamada al busqueda en anchura
+			     // return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
 						// Incluir aqui la llamada al busqueda de costo uniforme
@@ -191,12 +191,89 @@ bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const 
 
 	return false;
 }
+/*
+//---------------IMPLEMENTACION DEL ALGORITMO EN ANCHURA----------------------
+
+// Implementación de la búsqueda en Anchura.
+// Entran los puntos origen y destino y devuelve la
+// secuencia de acciones en plan, una lista de acciones.
+bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan) {
+	//Borro la lista
+	cout << "Calculando plan\n";
+	plan.clear();
+	set<estado,ComparaEstados> generados; 						// Lista de Cerrados
+	stack<nodo> pila;											// Lista de Abiertos
+
+  nodo current;
+	current.st = origen;
+	current.secuencia.empty();
+
+	pila.push(current);
+
+  while (!pila.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
+
+		pila.pop();
+		generados.insert(current.st);
+
+		// Generar descendiente de girar a la derecha
+		nodo hijoTurnR = current;
+		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
+		if (generados.find(hijoTurnR.st) == generados.end()){
+			hijoTurnR.secuencia.push_back(actTURN_R);
+			pila.push(hijoTurnR);
+
+		}
+
+		// Generar descendiente de girar a la izquierda
+		nodo hijoTurnL = current;
+		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
+		if (generados.find(hijoTurnL.st) == generados.end()){
+			hijoTurnL.secuencia.push_back(actTURN_L);
+			pila.push(hijoTurnL);
+		}
+
+		// Generar descendiente de avanzar
+		nodo hijoForward = current;
+		if (!HayObstaculoDelante(hijoForward.st)){
+			if (generados.find(hijoForward.st) == generados.end()){
+				hijoForward.secuencia.push_back(actFORWARD);
+				pila.push(hijoForward);
+			}
+		}
+
+		// Tomo el siguiente valor de la pila
+		if (!pila.empty()){
+			current = pila.top();
+		}
+	}
+
+  cout << "Terminada la busqueda\n";
+
+	if (current.st.fila == destino.fila and current.st.columna == destino.columna){
+		cout << "Cargando el plan\n";
+		plan = current.secuencia;
+		cout << "Longitud del plan: " << plan.size() << endl;
+		PintaPlan(plan);
+		// ver el plan en el mapa
+		VisualizaPlan(origen, plan);
+		return true;
+	}
+	else {
+		cout << "No encontrado plan\n";
+	}
+
+
+	return false;
+}
 
 
 
 
 
+*/
 
+
+//---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
 
 // Sacar por la términal la secuencia del plan obtenido
 void ComportamientoJugador::PintaPlan(list<Action> plan) {
