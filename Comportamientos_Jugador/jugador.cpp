@@ -5,6 +5,7 @@
 #include <cmath>
 #include <set>
 #include <stack>
+#include <queue>
 
 
 // Este es el método principal que debe contener los 4 Comportamientos_Jugador
@@ -14,7 +15,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	Action accion = actIDLE;
 	// Estoy en el nivel 1
 
-	actual.fila        = sensores.posF;
+	actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
 	actual.orientacion = sensores.sentido;
 
@@ -45,7 +46,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 			      return pathFinding_Profundidad(origen,destino,plan);
 						break;
 		case 2: cout << "Busqueda en Anchura\n";
-			     // return pathFinding_Anchura(origen,destino,plan);
+			      return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
 						// Incluir aqui la llamada al busqueda de costo uniforme
@@ -127,8 +128,8 @@ bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const 
 	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
-	set<estado,ComparaEstados> generados; // Lista de Cerrados
-	stack<nodo> pila;											// Lista de Abiertos
+	set<estado,ComparaEstados> generados;						 // Lista de Cerrados (lista de nodos que ya han sido expandidos pero no explorados)
+	stack<nodo> pila;											// Lista de Abiertos (lista de nodos visitados)
 
   nodo current;
 	current.st = origen;
@@ -191,7 +192,7 @@ bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const 
 
 	return false;
 }
-/*
+
 //---------------IMPLEMENTACION DEL ALGORITMO EN ANCHURA----------------------
 
 // Implementación de la búsqueda en Anchura.
@@ -201,26 +202,28 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
+	queue<nodo> cola;											// Lista de Abiertos
 	set<estado,ComparaEstados> generados; 						// Lista de Cerrados
-	stack<nodo> pila;											// Lista de Abiertos
+	
 
   nodo current;
 	current.st = origen;
 	current.secuencia.empty();
 
-	pila.push(current);
+	cola.push(current);
 
-  while (!pila.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
+  while (!cola.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
 
-		pila.pop();
+		cola.pop();
 		generados.insert(current.st);
+
 
 		// Generar descendiente de girar a la derecha
 		nodo hijoTurnR = current;
 		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
 		if (generados.find(hijoTurnR.st) == generados.end()){
 			hijoTurnR.secuencia.push_back(actTURN_R);
-			pila.push(hijoTurnR);
+			cola.push(hijoTurnR);
 
 		}
 
@@ -229,7 +232,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
 		if (generados.find(hijoTurnL.st) == generados.end()){
 			hijoTurnL.secuencia.push_back(actTURN_L);
-			pila.push(hijoTurnL);
+			cola.push(hijoTurnL);
 		}
 
 		// Generar descendiente de avanzar
@@ -237,13 +240,13 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 		if (!HayObstaculoDelante(hijoForward.st)){
 			if (generados.find(hijoForward.st) == generados.end()){
 				hijoForward.secuencia.push_back(actFORWARD);
-				pila.push(hijoForward);
+				cola.push(hijoForward);
 			}
 		}
 
-		// Tomo el siguiente valor de la pila
-		if (!pila.empty()){
-			current = pila.top();
+		// Tomo el siguiente valor de la cola
+		if (!cola.empty()){
+			current = cola.front();
 		}
 	}
 
@@ -270,7 +273,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 
 
 
-*/
+
 
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
