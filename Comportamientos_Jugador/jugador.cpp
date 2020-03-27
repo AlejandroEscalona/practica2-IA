@@ -269,10 +269,97 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 	return false;
 }
 
+//---------------IMPLEMENTACION DEL ALGORITMO PODERADO POR PESO----------------------
+
+// Implementación de la búsqueda ponderada por peso.
+// Entran los puntos origen y destino y devuelve la
+// secuencia de acciones en plan, una lista de acciones.
+
+void ComportamiendoJugador:: calcularPeso( nodoPonderado &nodo){
+	int columna = nodo.st.columna;
+	int fila = nodo.st.fila;
+	char casilla = mapaResultado[fila][columna];
+	switch(casilla){
+		case 'T': nodo.peso = 2; break;
+		case 'A': nodo.peso = 100; break;
+		case 'B': nodo.peso = 50; break;
+		default: nodo.peso = 1; break;
+	}
+}
 
 
+bool ComportamientoJugador::pathFinding_CostoUniforme( estado &origen, const estado &destino, list<Action> &plan) {
+	//Borro la lista
+	cout << "Calculando plan\n";
+	plan.clear();
+	queue<nodo> cola;											// Lista de Abiertos
+	set<estado,ComparaEstados> generados;      	// Lista de Cerrados
+	set< nodoPonderado, nodosComparados> seleccion;
+	
+
+  nodoPonderado current;
+	current.st = origen;
+	current.secuencia.empty();
+	current.peso = 0;
+
+	cola.push(current);
+
+  while (!cola.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
+
+		cola.pop();
+		generados.insert(current.st);
 
 
+		// Generar descendiente de girar a la derecha
+		nodoPonderado hijoTurnR = current;
+		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
+		if (generados.find(hijoTurnR.st) == generados.end()){
+			hijoTurnR.secuencia.push_back(actTURN_R);
+			cola.push(hijoTurnR);
+
+		}
+
+		// Generar descendiente de girar a la izquierda
+		nodoPonderado hijoTurnL = current;
+		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
+		if (generados.find(hijoTurnL.st) == generados.end()){
+			hijoTurnL.secuencia.push_back(actTURN_L);
+			cola.push(hijoTurnL);
+		}
+
+		// Generar descendiente de avanzar
+		nodoPonderado hijoForward = current;
+		if (!HayObstaculoDelante(hijoForward.st)){
+			if (generados.find(hijoForward.st) == generados.end()){
+				hijoForward.secuencia.push_back(actFORWARD);
+				cola.push(hijoForward);
+			}
+		}
+
+		// Tomo el siguiente valor de la cola
+		if (!cola.empty()){
+			current = cola.front();
+		}
+	}
+
+  cout << "Terminada la busqueda\n";
+
+	if (current.st.fila == destino.fila and current.st.columna == destino.columna){
+		cout << "Cargando el plan\n";
+		plan = current.secuencia;
+		cout << "Longitud del plan: " << plan.size() << endl;
+		PintaPlan(plan);
+		// ver el plan en el mapa
+		VisualizaPlan(origen, plan);
+		return true;
+	}
+	else {
+		cout << "No encontrado plan\n";
+	}
+
+
+	return false;
+}
 
 
 
