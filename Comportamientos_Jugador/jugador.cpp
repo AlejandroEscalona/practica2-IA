@@ -49,7 +49,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 			      return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
-						// Incluir aqui la llamada al busqueda de costo uniforme
+				 return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 		case 4: cout << "Busqueda para el reto\n";
 						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
@@ -275,7 +275,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 // Entran los puntos origen y destino y devuelve la
 // secuencia de acciones en plan, una lista de acciones.
 
-void ComportamiendoJugador:: calcularPeso( nodoPonderado &nodo){
+void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 	int columna = nodo.st.columna;
 	int fila = nodo.st.fila;
 	char casilla = mapaResultado[fila][columna];
@@ -288,13 +288,13 @@ void ComportamiendoJugador:: calcularPeso( nodoPonderado &nodo){
 }
 
 
-bool ComportamientoJugador::pathFinding_CostoUniforme( estado &origen, const estado &destino, list<Action> &plan) {
+bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan){
 	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
-	queue<nodo> cola;											// Lista de Abiertos
+	queue<nodoPonderado> cola;											// Lista de Abiertos
 	set<estado,ComparaEstados> generados;      	// Lista de Cerrados
-	set< nodoPonderado, nodosComparados> seleccion;
+	set<nodoPonderado,nodosComparados> seleccion;
 	
 
   nodoPonderado current;
@@ -313,28 +313,37 @@ bool ComportamientoJugador::pathFinding_CostoUniforme( estado &origen, const est
 		// Generar descendiente de girar a la derecha
 		nodoPonderado hijoTurnR = current;
 		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
+		calcularPeso(hijoTurnR);
 		if (generados.find(hijoTurnR.st) == generados.end()){
 			hijoTurnR.secuencia.push_back(actTURN_R);
-			cola.push(hijoTurnR);
+			seleccion.insert(hijoTurnR);
 
 		}
 
 		// Generar descendiente de girar a la izquierda
 		nodoPonderado hijoTurnL = current;
 		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
+		calcularPeso(hijoTurnL);
 		if (generados.find(hijoTurnL.st) == generados.end()){
 			hijoTurnL.secuencia.push_back(actTURN_L);
-			cola.push(hijoTurnL);
+			seleccion.insert(hijoTurnL);
 		}
 
 		// Generar descendiente de avanzar
 		nodoPonderado hijoForward = current;
+		calcularPeso(hijoForward);
 		if (!HayObstaculoDelante(hijoForward.st)){
 			if (generados.find(hijoForward.st) == generados.end()){
 				hijoForward.secuencia.push_back(actFORWARD);
-				cola.push(hijoForward);
+				seleccion.insert(hijoForward);
 			}
 		}
+
+		set<nodoPonderado, nodosComparados>::iterator it;
+		for(it=seleccion.begin(); it != seleccion.end(); it++)
+			cola.push(*it);
+
+			seleccion.clear();
 
 		// Tomo el siguiente valor de la cola
 		if (!cola.empty()){

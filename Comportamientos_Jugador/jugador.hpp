@@ -11,16 +11,16 @@ struct estado {
   int orientacion;
 };
 
-struc nodoPonderado{
+struct nodoPonderado{
   estado st;
-  list<action> secuencia;
+  list<Action> secuencia;
   int peso;
 };
 
-struc nodosComparados{
+struct nodosComparados{
   bool operator()(const nodoPonderado &x, const nodoPonderado &y)const{
-    if(x.pero <= y.peso)
-      return tue;
+    if(x.peso <= y.peso)
+      return true;
     else
       return false;
   }
@@ -67,6 +67,7 @@ class ComportamientoJugador : public Comportamiento {
 
     //Metodos realizados
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
+    bool pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan);
     void calcularPeso( nodoPonderado &nodo);
 
 };
