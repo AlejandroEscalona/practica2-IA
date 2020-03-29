@@ -1,3 +1,4 @@
+//Realizado por Alejandro Escalona García
 #include "../Comportamientos_Jugador/jugador.hpp"
 #include "motorlib/util.h"
 
