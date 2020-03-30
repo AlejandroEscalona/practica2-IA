@@ -81,6 +81,10 @@ bool actuacionJugador(unsigned char celda_inicial, unsigned char celda_fin, Acti
     break;
 
     case actTURN_R:
+      if (celda_inicial =='X'){ // Casilla Rosa (Recarga)
+          monitor.get_entidad(0)->increaseBateria(10);
+        }
+
       switch (monitor.get_entidad(0)->getOrientacion()) {
         case norte:
           monitor.get_entidad(0)->setOrientacion(este);
@@ -104,6 +108,10 @@ bool actuacionJugador(unsigned char celda_inicial, unsigned char celda_fin, Acti
     break;
 
     case actTURN_L:
+      if (celda_inicial =='X'){ // Casilla Rosa (Recarga)
+        monitor.get_entidad(0)->increaseBateria(10);
+      }
+
       switch (monitor.get_entidad(0)->getOrientacion()) {
         case norte:
           monitor.get_entidad(0)->setOrientacion(oeste);
@@ -127,6 +135,10 @@ bool actuacionJugador(unsigned char celda_inicial, unsigned char celda_fin, Acti
     break;
 
     case actIDLE:
+      if (celda_inicial =='X'){ // Casilla Rosa (Recarga)
+        monitor.get_entidad(0)->increaseBateria(10);
+      }
+
       salida = true;
     break;
   }

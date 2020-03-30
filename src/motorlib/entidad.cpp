@@ -49,6 +49,11 @@ Action Entidad::think(int acc, vector <vector< unsigned char> > vision, int leve
       if (tipo == jugador)
         cout << "Se agoto la bateria!" << endl;
     }
+    else if (getTiempo() > getTiempoMaximo()) {
+      done = true;
+      if (tipo == jugador)
+        cout << "Se agoto el tiempo de deliberacion!" << endl;
+    }
 
     sensor.posF = f;
     sensor.posC = c;

@@ -67,7 +67,9 @@ void MonitorJuego::decPasos(GLUI_EditText * editPosX, GLUI_EditText * editPosY) 
     }
     else {
       // Nivel 4
-      if ((maxPasos - pasosTotales) <= 0 or get_entidad(0)->getBateria() == 0) {
+      if ((maxPasos - pasosTotales) <= 0
+           or get_entidad(0)->getBateria() == 0
+           or get_entidad(0)->getTiempo() > get_entidad(0)->getTiempoMaximo()) {
         jugando = false;
         resultados = true;
       }
@@ -104,6 +106,10 @@ void MonitorJuego::decPasos(GLUI_EditText * editPosX, GLUI_EditText * editPosY) 
           objetivos.pop_front();
           setObjX(aqui.second);
           setObjY(aqui.first);
+          if (editPosX != NULL)
+          editPosX->set_int_val(aqui.second);
+          if (editPosY != NULL)
+          editPosY->set_int_val(aqui.first);
           cout << "Nuevo objetivo de la lista: (" << aqui.second << "," << aqui.first << ")" << endl;
           get_entidad(0)->resetFin();
 
@@ -151,6 +157,23 @@ void MonitorJuego::inicializar(int mix, int miy, int seed) {
   int naldeanos = tama / 10;
   unsigned char celdaRand;
   int bruj;
+
+  //Se construye una lisa con 200 objetivos
+  if (nivel == 4) {
+    int ox, oy;
+    for (int i=0; i<200; i++) {
+      do {
+        ox = aleatorio(getMapa()->getNFils()-1);
+        oy = aleatorio(getMapa()->getNCols()-1);
+        celdaRand = getMapa()->getCelda(ox, oy);
+      }
+      while( (celdaRand == 'P') or (celdaRand == 'M') );
+      pair<int,int> punto;
+      punto.first = oy;
+      punto.second = ox;
+      objetivos.push_back(punto);
+    }
+  }
 
   //Primero SIEMPRE se coloca al jugador. SIEMPRE.
   if ((mix == -1) or (miy == -1)) {

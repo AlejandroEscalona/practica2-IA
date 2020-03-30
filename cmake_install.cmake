@@ -1,4 +1,4 @@
-# Install script for directory: /home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux
+# Install script for directory: /home/alex/Escritorio/practica2_linux
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/alex/Escritorio/practica2_linux/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

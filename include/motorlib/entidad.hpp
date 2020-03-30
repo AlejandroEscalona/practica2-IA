@@ -46,6 +46,7 @@ class Entidad {
 	  int misiones = 0;
 	  bool done = false;
 	  double tiempo = 0;
+    double tiempoMaximo = 300 * CLOCKS_PER_SEC;
     int tiempo_sig_accion = 0;
     int bateria_sig_accion = 0;
     int nivel = 1;
@@ -108,6 +109,7 @@ class Entidad {
 
 	  void setTiempo(double valor) {tiempo=valor;}
 	  double getTiempo() {return tiempo;}
+    double getTiempoMaximo(){return tiempoMaximo;}
 	  void addTiempo(double valor) {tiempo+=valor;}
 
 	  int getMisiones() {return misiones;}

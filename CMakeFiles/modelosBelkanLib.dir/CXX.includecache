@@ -6,51 +6,51 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/aldeano.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/aldeano.cpp
 modelos/aldeano/aldeano.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/aldeano.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/aldeano.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/brazo.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/brazo.cpp
 modelos/aldeano/brazo.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/brazo.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/brazo.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/cabeza.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/cabeza.cpp
 modelos/aldeano/cabeza.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/cabeza.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/cabeza.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/cintura.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/cintura.cpp
 modelos/aldeano/cintura.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/cintura.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/cintura.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/pierna.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/pierna.cpp
 modelos/aldeano/pierna.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/pierna.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/pierna.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/torso.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/torso.cpp
 modelos/aldeano/torso.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/aldeano/modelos/aldeano/torso.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/aldeano/modelos/aldeano/torso.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/arbol/arbol.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/arbol/arbol.cpp
 modelos/arbol/arbol.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/arbol/modelos/arbol/arbol.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/arbol/modelos/arbol/arbol.hpp
 GL/glut.h
 -
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/item/item.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/item/item.cpp
 modelos/item/item.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/item/modelos/item/item.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/item/modelos/item/item.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/jugador/jugador3d.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/jugador/jugador3d.cpp
 modelos/jugador/jugador3d.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/jugador/modelos/jugador/jugador3d.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/jugador/modelos/jugador/jugador3d.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/jugador/quesito.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/jugador/quesito.cpp
 modelos/jugador/quesito.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/jugador/modelos/jugador/quesito.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/jugador/modelos/jugador/quesito.hpp
 
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/retrato.cpp
+/home/alex/Escritorio/practica2_linux/src/modelos/retrato.cpp
 modelos/retrato.hpp
-/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/modelos/modelos/retrato.hpp
+/home/alex/Escritorio/practica2_linux/src/modelos/modelos/retrato.hpp
 
 include/modelos/aldeano/aldeano.hpp
 modelos/aldeano/torso.hpp

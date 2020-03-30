@@ -101,6 +101,11 @@ class MonitorJuego {
     void set_semilla(int seed){semilla=seed;}
 
     void PintaEstadoMonitor();
+    pair<int,int> NextObjetivo(){
+      pair<int,int> punto = objetivos.front();
+      objetivos.pop_front();
+      return punto;
+    }
 
 };
 #endif

@@ -313,14 +313,15 @@ void botonConfigurarSimOK(int valor) {
   srand(setup1->get_int_val());
   monitor.inicializar();
 
-  editPosY->set_int_val(setup5->get_int_val());
-  editPosX->set_int_val(setup4->get_int_val());
   monitor.setObjX(setup4->get_int_val());
   monitor.setObjY(setup5->get_int_val());
-  monitor.get_entidad(0)->setPosicion(setup2->get_int_val(),setup3->get_int_val());
+  editPosY->set_int_val(setup5->get_int_val());
+  editPosX->set_int_val(setup4->get_int_val());
+  monitor.get_entidad(0)->setPosicion(setup3->get_int_val(),setup2->get_int_val());
   monitor.get_entidad(0)->setOrientacion(static_cast<Orientacion>(setup6->get_int_val()));
-  panelSelecMapaConfig->close();
 
+
+  panelSelecMapaConfig->close();
 }
 
 
@@ -390,17 +391,17 @@ void botonConfigurarNuevoMapaCB(int valor){
 
 
   GLUI_Panel *obj_panel = panelSelecMapaConfig->add_panel("Setup");
-  setup1 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "                       Semilla", GLUI_SPINNER_INT, &semilla);
-  setup2 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "  Origen Coordenada X", GLUI_SPINNER_INT, &posX);
-  setup2->set_int_limits(0,num_col,GLUI_LIMIT_WRAP);
-  setup3 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "  Origen Coordenada Y", GLUI_SPINNER_INT, &posY);
+  setup1 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "                Semilla ", GLUI_SPINNER_INT, &semilla);
+  setup3 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "           Origen Fila ", GLUI_SPINNER_INT, &posX);
   setup3->set_int_limits(0,num_filas,GLUI_LIMIT_WRAP);
-  setup6 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "        Orientacion Robot", GLUI_SPINNER_INT, &orienta);
+  setup2 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "    Origen Columna ", GLUI_SPINNER_INT, &posY);
+  setup2->set_int_limits(0,num_col,GLUI_LIMIT_WRAP);
+  setup6 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, " Orientacion Robot ", GLUI_SPINNER_INT, &orienta);
   setup6->set_int_limits(0,4,GLUI_LIMIT_WRAP);
-  setup4 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, " Destino Coordenada X", GLUI_SPINNER_INT, &ObjX);
-  setup4->set_int_limits(0,num_col,GLUI_LIMIT_WRAP);
-  setup5 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, " Destino Coordenada Y", GLUI_SPINNER_INT, &ObjY);
+  setup5 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "          Destino Fila ", GLUI_SPINNER_INT, &ObjY);
   setup5->set_int_limits(0,num_filas,GLUI_LIMIT_WRAP);
+  setup4 = panelSelecMapaConfig->add_spinner_to_panel(obj_panel, "   Destino Columna ", GLUI_SPINNER_INT, &ObjX);
+  setup4->set_int_limits(0,num_col,GLUI_LIMIT_WRAP);
 
   panelSelecMapaConfig->add_button("Ok", 1, botonConfigurarSimOK);
   panelSelecMapaConfig->add_button("Cancel", 1, botonConfigurarSimCANCEL);
