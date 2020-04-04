@@ -58,6 +58,9 @@ class ComportamientoJugador : public Comportamiento {
     estado actual, destino;
     list<Action> plan;
 
+    //Nuevas variables
+    char** sinexplorar;
+
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_Profundidad(const estado &origen, const estado &destino, list<Action> &plan);
@@ -69,6 +72,7 @@ class ComportamientoJugador : public Comportamiento {
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan);
     void calcularPeso( nodoPonderado &nodo);
+    void updateMapa(vector<unsigned char> V, estado &st);
 
 };
 

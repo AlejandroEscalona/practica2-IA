@@ -3,6 +3,7 @@
 #include "../Comportamientos_Jugador/jugador.hpp"
 #include "motorlib/util.h"
 
+
 #include <iostream>
 #include <cmath>
 #include <set>
@@ -271,7 +272,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 	return false;
 }
 
-//---------------IMPLEMENTACION DEL ALGORITMO PODERADO POR PESO----------------------
+//---------------IMPLEMENTACION DEL ALGORITMO PONDERADO POR PESO----------------------
 
 // Implementación de la búsqueda ponderada por peso.
 // Entran los puntos origen y destino y devuelve la
@@ -371,6 +372,92 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 
 	return false;
 }
+// ------------- REALIZADOS PARA EL NIVEL 2--------------------
+void ComportamientoJugador::updateMapa( vector<unsigned char> V , estado &st){
+	mapaResultado[st.fila][st.columna] = V[0];
+	if(st.fila > 0 and st.fila < (mapaResultado.size()) and st.columna > 0 and st.fila < (mapaResultado.size())){
+		switch (st.orientacion) {
+			case 0:
+				mapaResultado[st.fila-1][st.columna-1] = V[1];
+				mapaResultado[st.fila-1][st.columna] = V[2];
+				mapaResultado[st.fila-1][st.columna+1] = V[3];
+
+				mapaResultado[st.fila-2][st.columna-2] = V[4];
+				mapaResultado[st.fila-2][st.columna-1] = V[5];
+				mapaResultado[st.fila-2][st.columna] = V[6];
+				mapaResultado[st.fila-2][st.columna+1] = V[7];
+				mapaResultado[st.fila-2][st.columna+2] = V[8];
+
+				mapaResultado[st.fila-3][st.columna-3] = V[9];
+				mapaResultado[st.fila-3][st.columna-2] = V[10];
+				mapaResultado[st.fila-3][st.columna-1] = V[11];
+				mapaResultado[st.fila-3][st.columna] = V[12];
+				mapaResultado[st.fila-3][st.columna+1] = V[13];
+				mapaResultado[st.fila-3][st.columna+2] = V[14];
+				mapaResultado[st.fila-3][st.columna+3] = V[15];
+				break;
+			case 1:
+				mapaResultado[st.fila-1][st.columna+1] = V[1];
+				mapaResultado[st.fila][st.columna+1] = V[2];
+				mapaResultado[st.fila+1][st.columna+1] = V[3];
+
+				mapaResultado[st.fila-2][st.columna+2] = V[4];
+				mapaResultado[st.fila-1][st.columna+2] = V[5];
+				mapaResultado[st.fila][st.columna+2] = V[6];
+				mapaResultado[st.fila+1][st.columna+2] = V[7];
+				mapaResultado[st.fila+2][st.columna+2] = V[8];
+
+				mapaResultado[st.fila-3][st.columna+3] = V[9];
+				mapaResultado[st.fila-2][st.columna+3] = V[10];
+				mapaResultado[st.fila-1][st.columna+3] = V[11];
+				mapaResultado[st.fila][st.columna+3] = V[12];
+				mapaResultado[st.fila+1][st.columna+3] = V[13];
+				mapaResultado[st.fila+2][st.columna+3] = V[14];
+				mapaResultado[st.fila+3][st.columna+3] = V[15];
+				break;
+			case 2:
+				mapaResultado[st.fila+1][st.columna+1] = V[1];
+				mapaResultado[st.fila+1][st.columna] = V[2];
+				mapaResultado[st.fila+1][st.columna-1] = V[3];
+
+				mapaResultado[st.fila+2][st.columna+2] = V[4];
+				mapaResultado[st.fila+2][st.columna+1] = V[5];
+				mapaResultado[st.fila+2][st.columna] = V[6];
+				mapaResultado[st.fila+2][st.columna-1] = V[7];
+				mapaResultado[st.fila+2][st.columna-2] = V[8];
+
+				mapaResultado[st.fila+3][st.columna+3] = V[9];
+				mapaResultado[st.fila+3][st.columna+2] = V[10];
+				mapaResultado[st.fila+3][st.columna+1] = V[11];
+				mapaResultado[st.fila+3][st.columna] = V[12];
+				mapaResultado[st.fila+3][st.columna-1] = V[13];
+				mapaResultado[st.fila+3][st.columna-2] = V[14];
+				mapaResultado[st.fila+3][st.columna-3] = V[15];
+				break;
+			case 3:
+				mapaResultado[st.fila+1][st.columna-1] = V[1];
+				mapaResultado[st.fila][st.columna-1] = V[2];
+				mapaResultado[st.fila-1][st.columna-1] = V[3];
+
+				mapaResultado[st.fila+2][st.columna-2] = V[4];
+				mapaResultado[st.fila+1][st.columna-2] = V[5];
+				mapaResultado[st.fila][st.columna-2] = V[6];
+				mapaResultado[st.fila-1][st.columna-2] = V[7];
+				mapaResultado[st.fila-2][st.columna-2] = V[8];
+
+				mapaResultado[st.fila+3][st.columna-3] = V[9];
+				mapaResultado[st.fila+2][st.columna-3] = V[10];
+				mapaResultado[st.fila+1][st.columna-3] = V[11];
+				mapaResultado[st.fila][st.columna-3] = V[12];
+				mapaResultado[st.fila-1][st.columna-3] = V[13];
+				mapaResultado[st.fila-2][st.columna-3] = V[14];
+				mapaResultado[st.fila-3][st.columna-3] = V[15];
+				break;
+		}
+	}
+}
+
+
 
 
 
