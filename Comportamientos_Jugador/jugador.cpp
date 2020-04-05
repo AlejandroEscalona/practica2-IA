@@ -458,7 +458,89 @@ void ComportamientoJugador::updateMapa( vector<unsigned char> V , estado &st){
 }
 
 
+void ComportamientoJugador::updateMapaSinExplorar(vector<unsigned char> V, estado &st){
+	sinexplorar[st.fila][st.columna] = V[0];
+	if(st.fila > 7 and st.fila < (200-7) and st.columna > 7 and st.fila < (200-7)){
+		switch (st.orientacion) {
+			case 0:
+				sinexplorar[st.fila-1][st.columna-1] = V[1];
+				sinexplorar[st.fila-1][st.columna] = V[2];
+				sinexplorar[st.fila-1][st.columna+1] = V[3];
 
+				sinexplorar[st.fila-2][st.columna-2] = V[4];
+				sinexplorar[st.fila-2][st.columna-1] = V[5];
+				sinexplorar[st.fila-2][st.columna] = V[6];
+				sinexplorar[st.fila-2][st.columna+1] = V[7];
+				sinexplorar[st.fila-2][st.columna+2] = V[8];
+
+				sinexplorar[st.fila-3][st.columna-3] = V[9];
+				sinexplorar[st.fila-3][st.columna-2] = V[10];
+				sinexplorar[st.fila-3][st.columna-1] = V[11];
+				sinexplorar[st.fila-3][st.columna] = V[12];
+				sinexplorar[st.fila-3][st.columna+1] = V[13];
+				sinexplorar[st.fila-3][st.columna+2] = V[14];
+				sinexplorar[st.fila-3][st.columna+3] = V[15];
+				break;
+			case 1:
+				sinexplorar[st.fila-1][st.columna+1] = V[1];
+				sinexplorar[st.fila][st.columna+1] = V[2];
+				sinexplorar[st.fila+1][st.columna+1] = V[3];
+
+				sinexplorar[st.fila-2][st.columna+2] = V[4];
+				sinexplorar[st.fila-1][st.columna+2] = V[5];
+				sinexplorar[st.fila][st.columna+2] = V[6];
+				sinexplorar[st.fila+1][st.columna+2] = V[7];
+				sinexplorar[st.fila+2][st.columna+2] = V[8];
+
+				sinexplorar[st.fila-3][st.columna+3] = V[9];
+				sinexplorar[st.fila-2][st.columna+3] = V[10];
+				sinexplorar[st.fila-1][st.columna+3] = V[11];
+				sinexplorar[st.fila][st.columna+3] = V[12];
+				sinexplorar[st.fila+1][st.columna+3] = V[13];
+				sinexplorar[st.fila+2][st.columna+3] = V[14];
+				sinexplorar[st.fila+3][st.columna+3] = V[15];
+				break;
+			case 2:
+				sinexplorar[st.fila+1][st.columna+1] = V[1];
+				sinexplorar[st.fila+1][st.columna] = V[2];
+				sinexplorar[st.fila+1][st.columna-1] = V[3];
+
+				sinexplorar[st.fila+2][st.columna+2] = V[4];
+				sinexplorar[st.fila+2][st.columna+1] = V[5];
+				sinexplorar[st.fila+2][st.columna] = V[6];
+				sinexplorar[st.fila+2][st.columna-1] = V[7];
+				sinexplorar[st.fila+2][st.columna-2] = V[8];
+
+				sinexplorar[st.fila+3][st.columna+3] = V[9];
+				sinexplorar[st.fila+3][st.columna+2] = V[10];
+				sinexplorar[st.fila+3][st.columna+1] = V[11];
+				sinexplorar[st.fila+3][st.columna] = V[12];
+				sinexplorar[st.fila+3][st.columna-1] = V[13];
+				sinexplorar[st.fila+3][st.columna-2] = V[14];
+				sinexplorar[st.fila+3][st.columna-3] = V[15];
+				break;
+			case 3:
+				sinexplorar[st.fila+1][st.columna-1] = V[1];
+				sinexplorar[st.fila][st.columna-1] = V[2];
+				sinexplorar[st.fila-1][st.columna-1] = V[3];
+
+				sinexplorar[st.fila+2][st.columna-2] = V[4];
+				sinexplorar[st.fila+1][st.columna-2] = V[5];
+				sinexplorar[st.fila][st.columna-2] = V[6];
+				sinexplorar[st.fila-1][st.columna-2] = V[7];
+				sinexplorar[st.fila-2][st.columna-2] = V[8];
+
+				sinexplorar[st.fila+3][st.columna-3] = V[9];
+				sinexplorar[st.fila+2][st.columna-3] = V[10];
+				sinexplorar[st.fila+1][st.columna-3] = V[11];
+				sinexplorar[st.fila][st.columna-3] = V[12];
+				sinexplorar[st.fila-1][st.columna-3] = V[13];
+				sinexplorar[st.fila-2][st.columna-3] = V[14];
+				sinexplorar[st.fila-3][st.columna-3] = V[15];
+				break;
+		}
+	}
+}
 
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
