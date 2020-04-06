@@ -58,6 +58,8 @@ class ComportamientoJugador : public Comportamiento {
     estado actual, destino;
     list<Action> plan;
 
+    //Nuevas variables de estado
+
     //Nuevas variables
     char** sinexplorar;
 
