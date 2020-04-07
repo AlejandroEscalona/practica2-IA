@@ -1,5 +1,5 @@
 //Realizado por Alejandro Escalona García
-//fallos en los includes, revisar cpp del profesor
+
 #include "../Comportamientos_Jugador/jugador.hpp"
 #include "motorlib/util.h"
 
