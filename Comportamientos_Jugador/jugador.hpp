@@ -1,6 +1,6 @@
 #ifndef COMPORTAMIENTOJUGADOR_H
 #define COMPORTAMIENTOJUGADOR_H
-
+//problemas con un atributo
 #include "comportamientos/comportamiento.hpp"
 
 #include <list>
