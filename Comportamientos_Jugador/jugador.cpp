@@ -63,7 +63,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 }
 
 
-//---------------------- Implementación de la busqueda en profundidad ---------------------------
+//---------------------- Funciones auxiliares ---------------------------
 
 // Dado el código en carácter de una casilla del mapa dice si se puede
 // pasar por ella sin riegos de morir o chocar.
@@ -104,7 +104,6 @@ bool ComportamientoJugador::HayObstaculoDelante(estado &st){
 	  return true;
 	}
 }
-
 
 
 
@@ -278,6 +277,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 // Entran los puntos origen y destino y devuelve la
 // secuencia de acciones en plan, una lista de acciones.
 
+//calculamos el peso según el paso.
 void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 	int columna = nodo.st.columna;
 	int fila = nodo.st.fila;
@@ -542,6 +542,33 @@ void ComportamientoJugador::updateMapaSinExplorar(vector<unsigned char> V, estad
 	}
 }
 
+//Se comprueba el estado de la casilla de delante, si es valida o no.
+bool ComportamientoJugador::estadoCasillaDelante(estado &st){
+	int fil=st.fila, col=st.columna;
+
+  // se calcula cual es la casilla de delante
+	switch (st.orientacion) {
+		case 0: fil--; break;
+		case 1: col++; break;
+		case 2: fil++; break;
+		case 3: col--; break;
+	}
+
+	// se comprueba que el agente no se sale de los limites del mapa
+	if (fil<0 or fil>=200) return true;
+	if (col<0 or col>200) return true;
+
+	// Se comprueba que no haya un obstaculo que no limite el paso.
+	if (desconocidos[fil][col] != 'P' and desconocidos[fil][col] != 'M' and desconocidos[fil][col] != 'D'){
+		// No hay obstaculo, actualizo el parámetro st poniendo la casilla de delante.
+    st.fila = fil;
+		st.columna = col;
+		return false;
+	}
+	else{
+	  return true;
+	}
+}
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
 

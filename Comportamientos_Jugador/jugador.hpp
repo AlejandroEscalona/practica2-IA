@@ -1,6 +1,6 @@
 #ifndef COMPORTAMIENTOJUGADOR_H
 #define COMPORTAMIENTOJUGADOR_H
-//problemas con un atributo
+
 #include "comportamientos/comportamiento.hpp"
 
 #include <list>
@@ -76,6 +76,7 @@ class ComportamientoJugador : public Comportamiento {
     void calcularPeso( nodoPonderado &nodo);
     void updateMapa(vector<unsigned char> V, estado &st);
     void updateMapaSinExplorar(vector<unsigned char> V, estado &st);
+    bool estadoCasillaDelante(estado &st);
 
 };
 
