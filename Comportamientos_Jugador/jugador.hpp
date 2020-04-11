@@ -62,6 +62,7 @@ class ComportamientoJugador : public Comportamiento {
 
     //Nuevas variables
     char** sinexplorar;
+    bool seDondeEstoy;
 
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
