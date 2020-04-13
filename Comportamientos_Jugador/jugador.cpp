@@ -35,6 +35,111 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	else {
 		// Estoy en el nivel 2
 		cout << "Aún no implementado el nivel 2" << endl;
+
+		if(!estadoActualIniciado){
+			actual.fila = 100;
+			actual.columna = 100;
+			actual.orientacion = brujula;
+			estadoActualIniciado = true;
+		}
+
+		if(sensores.superficie[2] == 'a'){
+			updateEstadoActual(actual, actTURN_R);
+			if(pre-vista){
+				pre-vista = false;
+			}
+			ExistePlan = false;
+			return actTURN_R;
+		}
+
+		if(!saberLocalizacion){ 
+			if(obstaculoEnfrenteImprovisto(actual, sensores.terreno)){
+				updateEstadoActual(actual, actTURN_L);
+				ExistePlan = false; //-------------//s
+				return actTURN_L;
+			}
+			if(!ExistePlan){
+					if(pre-vista){
+						ExistePlan = pathFinding_K(actual, plan);
+					}
+					else{
+						ExistePlan = pathFinding_Desconocido(actual, plan);
+					}
+			}
+			Action sigaction;
+			if(ExistePlan && plan.size() > 0){
+				sigaction=plan.front();
+				plan.erase(plan.begin());
+			}
+			else{
+				sigaction = actIDLE;
+			}
+			ultimaAccion = sigaction;
+			updateMapaDesconocido(actual, sensores.terreno);
+			updateEstadoActual(actual, sigaction);
+			if(!pre-vista){
+				for(int i = 0; i < 16; i++){
+					if(sensores.terreno[i] == 'K'){
+						cout << "HE VISTO K" << endl;
+						pre-vista = true;
+						updateEstadoActual(actual, actIDLE);
+						return actIDLE;
+					}
+				}
+			}
+			else{
+				if(sensores.mensajeF != -1){
+					cout << "ESTOY EN K" << endl;
+					saberLocalizacion = true;
+					ExistePlan = false;
+					actual.fila = sensores.mensajeF;
+					actual.columna = sensores.mensajeC;
+					destino.fila = sensores.destinoF;
+					destino.columna = sensores.destinoC;
+					return actIDLE;
+				}
+			}
+			if(plan.size() == 0){
+				ExistePlan = false;
+			}
+			return sigaction;
+		}
+		else{
+			if(obstaculoEnfrenteImprovisto(actual, sensores.terreno) && ExistePlan){
+				updateEstadoActual(actual, actIDLE);
+				ExistePlan = false;
+				return actIDLE;
+			}
+			if(!ExistePlan){
+				cout << "Actual: (" << actual.fila << "," << actual.columna << ")" << endl;
+				cout << "Destino: (" << destino.fila << "," << destino.columna << ")" << endl;
+				ExistePlan = pathFinding (sensores.nivel, actual, destino, plan);
+			}
+			Action sigaction;
+			if(ExistePlan && plan.size() > 0){
+				sigaction=plan.front();
+				plan.erase(plan.begin());
+			}
+			ultimaAccion = sigaction;
+			updateMapa(actual, sensores.terreno);
+			updateEstadoActual(actual, sigaction);
+
+			if(plan.size() == 0){
+				if(actual.fila == destino.fila and actual.columna == destino.columna){
+					objetivos++;
+					cout << "Objetivos alcanzados: " << objetivos << endl;
+				}
+				destino.fila = sensores.destinoF;
+				destino.columna = sensores.destinoC;
+				ExistePlan = false;
+			}
+			return sigaction;
+		}
+  return accion;
+	} // FIN DEL ELSE
+
+
+
 	}
 	accion = plan.front();
   return accion;
@@ -570,6 +675,40 @@ bool ComportamientoJugador::estadoCasillaDelante(estado &st){
 	}
 }
 
+//Metodo para comprobar si hay un obstaculo enfrente o no.
+bool ComportamientoJugador::obstaculoEnfrenteImprovisto(estado &st, vector<unsigned char> V){
+	if(V[2] == 'P' || V[2] == 'M'){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+//Metodo que actualiza el estado actual
+void ComportamientoJugador::updateEstadoActual(estado &st, Action accion){
+		switch (accion) {
+			case actFORWARD:
+				switch (st.orientacion) {
+					case 0: st.fila--; break;
+					case 1: st.columna++; break;
+					case 2: st.fila++; break;
+					case 3: st.columna--; break;
+				}
+				break;
+			case actTURN_L:
+				st.orientacion = (st.orientacion+3)%4;
+				break;
+			case actTURN_R:
+				st.orientacion = (st.orientacion+1)%4;
+				break;
+			case actIDLE:
+				break;
+		}
+}
+
+
+
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
 
 // Sacar por la términal la secuencia del plan obtenido
@@ -592,6 +731,7 @@ void ComportamientoJugador::PintaPlan(list<Action> plan) {
 	}
 	cout << endl;
 }
+
 
 
 

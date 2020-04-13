@@ -62,7 +62,11 @@ class ComportamientoJugador : public Comportamiento {
 
     //Nuevas variables
     char** sinexplorar;
-    bool seDondeEstoy;
+    bool saberLocalizacion;
+    bool estadoActualIniciado=false;
+    bool pre-vista;
+    bool ExistePlan;
+
 
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
@@ -70,6 +74,7 @@ class ComportamientoJugador : public Comportamiento {
 
     void PintaPlan(list<Action> plan);
     bool HayObstaculoDelante(estado &st);
+    
 
     //Metodos realizados
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
@@ -78,6 +83,8 @@ class ComportamientoJugador : public Comportamiento {
     void updateMapa(vector<unsigned char> V, estado &st);
     void updateMapaSinExplorar(vector<unsigned char> V, estado &st);
     bool estadoCasillaDelante(estado &st);
+    bool obstaculoEnfrenteImprovisto(estado &st, vector<unsigned char> V);
+    void updateEstadoActual(estado &st, Action accion);
 
 };
 
