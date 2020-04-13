@@ -16,7 +16,7 @@
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
 	Action accion = actIDLE;
-	// Estoy en el nivel 1
+	// Estoy en el nivel 1  
 
 	actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
@@ -34,7 +34,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	else {
 		// Estoy en el nivel 2
-		cout << "Aún no implementado el nivel 2" << endl;
+		cout << "En proceso nivel 2" << endl;
 
 		if(!estadoActualIniciado){
 			actual.fila = 100;
@@ -55,15 +55,15 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		if(!saberLocalizacion){ 
 			if(obstaculoEnfrenteImprovisto(actual, sensores.terreno)){
 				updateEstadoActual(actual, actTURN_L);
-				ExistePlan = false; //-------------//s
+				ExistePlan = false; 
 				return actTURN_L;
 			}
 			if(!ExistePlan){
 					if(pre-vista){
-						ExistePlan = pathFinding_K(actual, plan);
+						ExistePlan = pathFinding_K(actual, plan);//-------------//s
 					}
 					else{
-						ExistePlan = pathFinding_Desconocido(actual, plan);
+						ExistePlan = pathFinding_Desconocido(actual, plan);//-------------//s
 					}
 			}
 			Action sigaction;
@@ -75,7 +75,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 				sigaction = actIDLE;
 			}
 			ultimaAccion = sigaction;
-			updateMapaDesconocido(actual, sensores.terreno);
+			updateMapaSinExplorar(actual, sensores.terreno);
 			updateEstadoActual(actual, sigaction);
 			if(!pre-vista){
 				for(int i = 0; i < 16; i++){
@@ -135,12 +135,10 @@ Action ComportamientoJugador::think(Sensores sensores) {
 			}
 			return sigaction;
 		}
-  return accion;
+  		return accion;
 	} // FIN DEL ELSE
 
-
-
-	}
+	
 	accion = plan.front();
   return accion;
 }
@@ -160,7 +158,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 				 return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 		case 4: cout << "Busqueda para el reto\n";
-						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
+						return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 	}
 	cout << "Comportamiento sin implementar\n";
@@ -707,6 +705,138 @@ void ComportamientoJugador::updateEstadoActual(estado &st, Action accion){
 		}
 }
 
+//REVISAAAR
+bool ComportamientoJugador::pathFinding_Desconocido(const estado &origen, list<Action> &plan) {
+	plan.clear();
+	set<estado,ComparaEstados> generados; // Lista de Cerrados
+	stack<nodo> pila;											// Lista de Abiertos
+
+  nodo current;
+	current.st = origen;
+	current.secuencia.empty();
+
+	pila.push(current);
+
+  while (!pila.empty() and desconocidos[current.st.fila][current.st.columna] != '?'){
+		pila.pop();
+		generados.insert(current.st);
+
+
+		// Generar descendiente de girar a la derecha
+		nodo hijoTurnR = current;
+		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
+		if (generados.find(hijoTurnR.st) == generados.end()){
+			hijoTurnR.secuencia.push_back(actTURN_R);
+			pila.push(hijoTurnR);
+		}
+		// Generar descendiente de girar a la izquierda
+		nodo hijoTurnL = current;
+		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
+		if (generados.find(hijoTurnL.st) == generados.end()){
+			hijoTurnL.secuencia.push_back(actTURN_L);
+			pila.push(hijoTurnL);
+		}
+		// Generar descendiente de avanzar
+		nodo hijoForward = current;
+		switch (hijoForward.st.orientacion) {
+			case 0: hijoForward.st.fila--; break;
+			case 1: hijoForward.st.columna++; break;
+			case 2: hijoForward.st.fila++; break;
+			case 3: hijoForward.st.columna--; break;
+		}
+		if(!estadoForwardnoValido(hijoForward.st)){
+			if (generados.find(hijoForward.st) == generados.end()){
+				hijoForward.secuencia.push_back(actFORWARD);
+				pila.push(hijoForward);
+			}
+		}
+
+		// Tomo el siguiente valor de la cola
+		if (!pila.empty()){
+			current = pila.top();
+		}
+	}
+
+  cout << "Terminada la busqueda\n";
+	if (desconocidos[current.st.fila][current.st.columna] == '?'){
+		cout << "Cargando el plan\n";
+		plan = current.secuencia;
+		cout << "Longitud del plan: " << plan.size() << endl;
+		PintaPlan(plan);
+		return true;
+	}
+	else {
+		cout << "No encontrado plan\n";
+	}
+	return false;
+}
+
+// ------- REVISAAR---
+bool ComportamientoJugador::pathFinding_K(const estado &origen, list<Action> &plan) {
+	cout << "Calculando camino hacia K" << endl;
+	plan.clear();
+	set<estado,ComparaEstados> generados; // Lista de Cerrados
+	queue<nodo> cola;											// Lista de Abiertos
+
+  nodo current;
+	current.st = origen;
+	current.secuencia.empty();
+
+	cola.push(current);
+
+  while (!cola.empty() and desconocidos[current.st.fila][current.st.columna] != 'K'){
+		cola.pop();
+		generados.insert(current.st);
+
+
+		// Generar descendiente de girar a la derecha
+		nodo hijoTurnR = current;
+		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
+		if (generados.find(hijoTurnR.st) == generados.end()){
+			hijoTurnR.secuencia.push_back(actTURN_R);
+			cola.push(hijoTurnR);
+		}
+		// Generar descendiente de girar a la izquierda
+		nodo hijoTurnL = current;
+		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
+		if (generados.find(hijoTurnL.st) == generados.end()){
+			hijoTurnL.secuencia.push_back(actTURN_L);
+			cola.push(hijoTurnL);
+		}
+		// Generar descendiente de avanzar
+		nodo hijoForward = current;
+		switch (hijoForward.st.orientacion) {
+			case 0: hijoForward.st.fila--; break;
+			case 1: hijoForward.st.columna++; break;
+			case 2: hijoForward.st.fila++; break;
+			case 3: hijoForward.st.columna--; break;
+		}
+
+		if (generados.find(hijoForward.st) == generados.end()){
+			hijoForward.secuencia.push_back(actFORWARD);
+			cola.push(hijoForward);
+		}
+
+
+		// Tomo el siguiente valor de la cola
+		if (!cola.empty()){
+			current = cola.front();
+		}
+	}
+
+  cout << "Terminada la busqueda\n";
+	if (desconocidos[current.st.fila][current.st.columna] == 'K'){
+		cout << "Cargando el plan\n";
+		plan = current.secuencia;
+		cout << "Longitud del plan: " << plan.size() << endl;
+		PintaPlan(plan);
+		return true;
+	}
+	else {
+		cout << "No encontrado plan\n";
+	}
+	return false;
+}
 
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
