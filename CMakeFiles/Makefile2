@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/pract
 # Target rules for target CMakeFiles/BelkanSG.dir
 
 # All Build rule for target.
-CMakeFiles/BelkanSG.dir/all: CMakeFiles/GLUILib.dir/all
 CMakeFiles/BelkanSG.dir/all: CMakeFiles/motorLib.dir/all
-CMakeFiles/BelkanSG.dir/all: CMakeFiles/obj3DLib.dir/all
-CMakeFiles/BelkanSG.dir/all: CMakeFiles/comportamientosLib.dir/all
 CMakeFiles/BelkanSG.dir/all: CMakeFiles/modelosBelkanLib.dir/all
+CMakeFiles/BelkanSG.dir/all: CMakeFiles/comportamientosLib.dir/all
+CMakeFiles/BelkanSG.dir/all: CMakeFiles/GLUILib.dir/all
+CMakeFiles/BelkanSG.dir/all: CMakeFiles/obj3DLib.dir/all
 	$(MAKE) -f CMakeFiles/BelkanSG.dir/build.make CMakeFiles/BelkanSG.dir/depend
 	$(MAKE) -f CMakeFiles/BelkanSG.dir/build.make CMakeFiles/BelkanSG.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles --progress-num=3,4 "Built target BelkanSG"
@@ -141,11 +141,11 @@ clean: CMakeFiles/GLUILib.dir/clean
 # Target rules for target CMakeFiles/Belkan.dir
 
 # All Build rule for target.
-CMakeFiles/Belkan.dir/all: CMakeFiles/GLUILib.dir/all
 CMakeFiles/Belkan.dir/all: CMakeFiles/motorLib.dir/all
-CMakeFiles/Belkan.dir/all: CMakeFiles/obj3DLib.dir/all
-CMakeFiles/Belkan.dir/all: CMakeFiles/comportamientosLib.dir/all
 CMakeFiles/Belkan.dir/all: CMakeFiles/modelosBelkanLib.dir/all
+CMakeFiles/Belkan.dir/all: CMakeFiles/comportamientosLib.dir/all
+CMakeFiles/Belkan.dir/all: CMakeFiles/GLUILib.dir/all
+CMakeFiles/Belkan.dir/all: CMakeFiles/obj3DLib.dir/all
 	$(MAKE) -f CMakeFiles/Belkan.dir/build.make CMakeFiles/Belkan.dir/depend
 	$(MAKE) -f CMakeFiles/Belkan.dir/build.make CMakeFiles/Belkan.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles --progress-num=1,2 "Built target Belkan"
@@ -219,9 +219,9 @@ clean: CMakeFiles/obj3DLib.dir/clean
 # Target rules for target CMakeFiles/motorLib.dir
 
 # All Build rule for target.
+CMakeFiles/motorLib.dir/all: CMakeFiles/comportamientosLib.dir/all
 CMakeFiles/motorLib.dir/all: CMakeFiles/GLUILib.dir/all
 CMakeFiles/motorLib.dir/all: CMakeFiles/obj3DLib.dir/all
-CMakeFiles/motorLib.dir/all: CMakeFiles/comportamientosLib.dir/all
 	$(MAKE) -f CMakeFiles/motorLib.dir/build.make CMakeFiles/motorLib.dir/depend
 	$(MAKE) -f CMakeFiles/motorLib.dir/build.make CMakeFiles/motorLib.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/CMakeFiles --progress-num=55,56,57,58,59,60,61 "Built target motorLib"
