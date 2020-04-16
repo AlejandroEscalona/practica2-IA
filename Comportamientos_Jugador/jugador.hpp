@@ -35,42 +35,15 @@ class ComportamientoJugador : public Comportamiento {
       destino.fila = -1;
       destino.columna = -1;
       destino.orientacion = -1;
-      objetivos = 0;
-      ExistePlan = false;
-      saberLocalizacion = false;
-      estadoActualIniciado = false;
-      pre-vista = false;
-      tam = 200;
-      desconocidos = new char*[tam];
-      for(int i = 0; i < tam; i++){
-        desconocidos[i] = new char[tam];
-        for(int j = 0; j < tam; j++){
-          desconocidos[i][j] = '?';
-        }
-      }
     }
     ComportamientoJugador(std::vector< std::vector< unsigned char> > mapaR) : Comportamiento(mapaR) {
-     // Inicializar Variables de Estado
+      // Inicializar Variables de Estado
       fil = col = 99;
       brujula = 0; // 0: Norte, 1:Este, 2:Sur, 3:Oeste
       destino.fila = -1;
       destino.columna = -1;
       destino.orientacion = -1;
-      objetivos = 0;
-      ExistePlan = false;
-      saberLocalizacion = false;
-      estadoActualIniciado = false;
-      pre-vista = false;
-      tam = 200;
-      desconocidos = new char*[tam];
-      for(int i = 0; i < tam; i++){
-        desconocidos[i] = new char[tam];
-        for(int j = 0; j < tam; j++){
-          desconocidos[i][j] = '?';
-        }
-      }
     }
-  
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
     ~ComportamientoJugador(){}
 
@@ -85,39 +58,17 @@ class ComportamientoJugador : public Comportamiento {
     estado actual, destino;
     list<Action> plan;
 
-    //Nuevas variables de estado
-
-    //Nuevas variables
-    char** sinexplorar;
-    bool saberLocalizacion;
-    bool estadoActualIniciado;
-    bool pre-vista;
-    bool ExistePlan;
-    int objetivos;
-    int tam;
-
-
-
-
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_Profundidad(const estado &origen, const estado &destino, list<Action> &plan);
 
     void PintaPlan(list<Action> plan);
     bool HayObstaculoDelante(estado &st);
-    
 
     //Metodos realizados
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan);
     void calcularPeso( nodoPonderado &nodo);
-    void updateMapa(vector<unsigned char> V, estado &st);
-    void updateMapaSinExplorar(vector<unsigned char> V, estado &st);
-    bool estadoCasillaDelante(estado &st);
-    bool obstaculoEnfrenteImprovisto(estado &st, vector<unsigned char> V);
-    void updateEstadoActual(estado &st, Action accion);
-    bool pathFinding_Desconocido(const estado &origen, list<Action> &plan);
-    bool pathFinding_K(const estado &origen, list<Action> &plan);
 
 };
 

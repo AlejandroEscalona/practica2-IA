@@ -1,15 +1,13 @@
 //Realizado por Alejandro Escalona García
-
 #include "../Comportamientos_Jugador/jugador.hpp"
 #include "motorlib/util.h"
-
 
 #include <iostream>
 #include <cmath>
 #include <set>
 #include <stack>
 #include <queue>
-//probar
+
 
 // Este es el método principal que debe contener los 4 Comportamientos_Jugador
 // que se piden en la práctica. Tiene como entrada la información de los
@@ -17,7 +15,7 @@
 Action ComportamientoJugador::think(Sensores sensores) {
 	Action accion = actIDLE;
 	// Estoy en el nivel 1
-	
+
 	actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
 	actual.orientacion = sensores.sentido;
@@ -34,116 +32,8 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	else {
 		// Estoy en el nivel 2
-<<<<<<< HEAD
-		cout << "nivel 2 esta casi apunto " << endl;
+		cout << "Aún no implementado el nivel 2" << endl;
 	}
-=======
-		cout << "En proceso nivel 2" << endl;
-
-		if(!estadoActualIniciado){
-			actual.fila = 100;
-			actual.columna = 100;
-			actual.orientacion = brujula;
-			estadoActualIniciado = true;
-		}
-
-		if(sensores.superficie[2] == 'a'){
-			updateEstadoActual(actual, actTURN_R);
-			if(pre-vista){
-				pre-vista = false;
-			}
-			ExistePlan = false;
-			return actTURN_R;
-		}
-
-		if(!saberLocalizacion){ 
-			if(obstaculoEnfrenteImprovisto(actual, sensores.terreno)){
-				updateEstadoActual(actual, actTURN_L);
-				ExistePlan = false; 
-				return actTURN_L;
-			}
-			if(!ExistePlan){
-					if(pre-vista){
-						ExistePlan = pathFinding_K(actual, plan);//-------------//s
-					}
-					else{
-						ExistePlan = pathFinding_Desconocido(actual, plan);//-------------//s
-					}
-			}
-			Action sigaction;
-			if(ExistePlan && plan.size() > 0){
-				sigaction=plan.front();
-				plan.erase(plan.begin());
-			}
-			else{
-				sigaction = actIDLE;
-			}
-			ultimaAccion = sigaction;
-			updateMapaSinExplorar(actual, sensores.terreno);
-			updateEstadoActual(actual, sigaction);
-			if(!pre-vista){
-				for(int i = 0; i < 16; i++){
-					if(sensores.terreno[i] == 'K'){
-						cout << "HE VISTO K" << endl;
-						pre-vista = true;
-						updateEstadoActual(actual, actIDLE);
-						return actIDLE;
-					}
-				}
-			}
-			else{
-				if(sensores.mensajeF != -1){
-					cout << "ESTOY EN K" << endl;
-					saberLocalizacion = true;
-					ExistePlan = false;
-					actual.fila = sensores.mensajeF;
-					actual.columna = sensores.mensajeC;
-					destino.fila = sensores.destinoF;
-					destino.columna = sensores.destinoC;
-					return actIDLE;
-				}
-			}
-			if(plan.size() == 0){
-				ExistePlan = false;
-			}
-			return sigaction;
-		}
-		else{
-			if(obstaculoEnfrenteImprovisto(actual, sensores.terreno) && ExistePlan){
-				updateEstadoActual(actual, actIDLE);
-				ExistePlan = false;
-				return actIDLE;
-			}
-			if(!ExistePlan){
-				cout << "Actual: (" << actual.fila << "," << actual.columna << ")" << endl;
-				cout << "Destino: (" << destino.fila << "," << destino.columna << ")" << endl;
-				ExistePlan = pathFinding (sensores.nivel, actual, destino, plan);
-			}
-			Action sigaction;
-			if(ExistePlan && plan.size() > 0){
-				sigaction=plan.front();
-				plan.erase(plan.begin());
-			}
-			ultimaAccion = sigaction;
-			updateMapa(actual, sensores.terreno);
-			updateEstadoActual(actual, sigaction);
-
-			if(plan.size() == 0){
-				if(actual.fila == destino.fila and actual.columna == destino.columna){
-					objetivos++;
-					cout << "Objetivos alcanzados: " << objetivos << endl;
-				}
-				destino.fila = sensores.destinoF;
-				destino.columna = sensores.destinoC;
-				ExistePlan = false;
-			}
-			return sigaction;
-		}
-  		return accion;
-	} // FIN DEL ELSE
-
-	
->>>>>>> d3110eb35b0618bc32e8e2d64b83537348183aef
 	accion = plan.front();
   return accion;
 }
@@ -154,16 +44,15 @@ Action ComportamientoJugador::think(Sensores sensores) {
 bool ComportamientoJugador::pathFinding (int level, const estado &origen, const estado &destino, list<Action> &plan){
 	switch (level){
 		case 1: cout << "Busqueda en profundad\n";
-			      	return pathFinding_Profundidad(origen,destino,plan);
+			      return pathFinding_Profundidad(origen,destino,plan);
 						break;
 		case 2: cout << "Busqueda en Anchura\n";
-			      	return pathFinding_Anchura(origen,destino,plan);
+			      return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
-				 	return pathFinding_CostoUniforme(origen,destino,plan);
+				 return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 		case 4: cout << "Busqueda para el reto\n";
-				 	return pathFinding_CostoUniforme(origen,destino,plan);
 						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
 						break;
 	}
@@ -172,7 +61,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 }
 
 
-//---------------------- Funciones auxiliares ---------------------------
+//---------------------- Implementación de la busqueda en profundidad ---------------------------
 
 // Dado el código en carácter de una casilla del mapa dice si se puede
 // pasar por ella sin riegos de morir o chocar.
@@ -216,6 +105,7 @@ bool ComportamientoJugador::HayObstaculoDelante(estado &st){
 
 
 
+
 struct nodo{
 	estado st;
 	list<Action> secuencia;
@@ -237,7 +127,6 @@ struct ComparaEstados{
 // secuencia de acciones en plan, una lista de acciones.
 bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const estado &destino, list<Action> &plan) {
 	//Borro la lista
-	cout << " Estoy dentro de profundidad"<<endl;
 	cout << "Calculando plan\n";
 	plan.clear();
 	set<estado,ComparaEstados> generados;						 // Lista de Cerrados (lista de nodos que ya han sido expandidos pero no explorados)
@@ -381,13 +270,12 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 	return false;
 }
 
-//---------------IMPLEMENTACION DEL ALGORITMO PONDERADO POR PESO----------------------
+//---------------IMPLEMENTACION DEL ALGORITMO PODERADO POR PESO----------------------
 
 // Implementación de la búsqueda ponderada por peso.
 // Entran los puntos origen y destino y devuelve la
 // secuencia de acciones en plan, una lista de acciones.
 
-//calculamos el peso según el paso.
 void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 	int columna = nodo.st.columna;
 	int fila = nodo.st.fila;
@@ -402,11 +290,11 @@ void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 
 
 bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan){
-	
+	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
-	queue<nodoPonderado> cola;										
-	set<estado,ComparaEstados> generados;      	
+	queue<nodoPonderado> cola;											// Lista de Abiertos
+	set<estado,ComparaEstados> generados;      	// Lista de Cerrados
 	set<nodoPonderado,nodosComparados> seleccion;
 	
 
@@ -482,368 +370,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 
 	return false;
 }
-// ------------- REALIZADOS PARA EL NIVEL 2--------------------
-void ComportamientoJugador::updateMapa( vector<unsigned char> V , estado &st){
-	mapaResultado[st.fila][st.columna] = V[0];
-	if(st.fila > 0 and st.fila < (mapaResultado.size()) and st.columna > 0 and st.fila < (mapaResultado.size())){
-		switch (st.orientacion) {
-			case 0:
-				mapaResultado[st.fila-1][st.columna-1] = V[1];
-				mapaResultado[st.fila-1][st.columna] = V[2];
-				mapaResultado[st.fila-1][st.columna+1] = V[3];
 
-				mapaResultado[st.fila-2][st.columna-2] = V[4];
-				mapaResultado[st.fila-2][st.columna-1] = V[5];
-				mapaResultado[st.fila-2][st.columna] = V[6];
-				mapaResultado[st.fila-2][st.columna+1] = V[7];
-				mapaResultado[st.fila-2][st.columna+2] = V[8];
-
-				mapaResultado[st.fila-3][st.columna-3] = V[9];
-				mapaResultado[st.fila-3][st.columna-2] = V[10];
-				mapaResultado[st.fila-3][st.columna-1] = V[11];
-				mapaResultado[st.fila-3][st.columna] = V[12];
-				mapaResultado[st.fila-3][st.columna+1] = V[13];
-				mapaResultado[st.fila-3][st.columna+2] = V[14];
-				mapaResultado[st.fila-3][st.columna+3] = V[15];
-				break;
-			case 1:
-				mapaResultado[st.fila-1][st.columna+1] = V[1];
-				mapaResultado[st.fila][st.columna+1] = V[2];
-				mapaResultado[st.fila+1][st.columna+1] = V[3];
-
-				mapaResultado[st.fila-2][st.columna+2] = V[4];
-				mapaResultado[st.fila-1][st.columna+2] = V[5];
-				mapaResultado[st.fila][st.columna+2] = V[6];
-				mapaResultado[st.fila+1][st.columna+2] = V[7];
-				mapaResultado[st.fila+2][st.columna+2] = V[8];
-
-				mapaResultado[st.fila-3][st.columna+3] = V[9];
-				mapaResultado[st.fila-2][st.columna+3] = V[10];
-				mapaResultado[st.fila-1][st.columna+3] = V[11];
-				mapaResultado[st.fila][st.columna+3] = V[12];
-				mapaResultado[st.fila+1][st.columna+3] = V[13];
-				mapaResultado[st.fila+2][st.columna+3] = V[14];
-				mapaResultado[st.fila+3][st.columna+3] = V[15];
-				break;
-			case 2:
-				mapaResultado[st.fila+1][st.columna+1] = V[1];
-				mapaResultado[st.fila+1][st.columna] = V[2];
-				mapaResultado[st.fila+1][st.columna-1] = V[3];
-
-				mapaResultado[st.fila+2][st.columna+2] = V[4];
-				mapaResultado[st.fila+2][st.columna+1] = V[5];
-				mapaResultado[st.fila+2][st.columna] = V[6];
-				mapaResultado[st.fila+2][st.columna-1] = V[7];
-				mapaResultado[st.fila+2][st.columna-2] = V[8];
-
-				mapaResultado[st.fila+3][st.columna+3] = V[9];
-				mapaResultado[st.fila+3][st.columna+2] = V[10];
-				mapaResultado[st.fila+3][st.columna+1] = V[11];
-				mapaResultado[st.fila+3][st.columna] = V[12];
-				mapaResultado[st.fila+3][st.columna-1] = V[13];
-				mapaResultado[st.fila+3][st.columna-2] = V[14];
-				mapaResultado[st.fila+3][st.columna-3] = V[15];
-				break;
-			case 3:
-				mapaResultado[st.fila+1][st.columna-1] = V[1];
-				mapaResultado[st.fila][st.columna-1] = V[2];
-				mapaResultado[st.fila-1][st.columna-1] = V[3];
-
-				mapaResultado[st.fila+2][st.columna-2] = V[4];
-				mapaResultado[st.fila+1][st.columna-2] = V[5];
-				mapaResultado[st.fila][st.columna-2] = V[6];
-				mapaResultado[st.fila-1][st.columna-2] = V[7];
-				mapaResultado[st.fila-2][st.columna-2] = V[8];
-
-				mapaResultado[st.fila+3][st.columna-3] = V[9];
-				mapaResultado[st.fila+2][st.columna-3] = V[10];
-				mapaResultado[st.fila+1][st.columna-3] = V[11];
-				mapaResultado[st.fila][st.columna-3] = V[12];
-				mapaResultado[st.fila-1][st.columna-3] = V[13];
-				mapaResultado[st.fila-2][st.columna-3] = V[14];
-				mapaResultado[st.fila-3][st.columna-3] = V[15];
-				break;
-		}
-	}
-}
-
-
-void ComportamientoJugador::updateMapaSinExplorar(vector<unsigned char> V, estado &st){
-	sinexplorar[st.fila][st.columna] = V[0];
-	if(st.fila > 7 and st.fila < (200-7) and st.columna > 7 and st.fila < (200-7)){
-		switch (st.orientacion) {
-			case 0:
-				sinexplorar[st.fila-1][st.columna-1] = V[1];
-				sinexplorar[st.fila-1][st.columna] = V[2];
-				sinexplorar[st.fila-1][st.columna+1] = V[3];
-
-				sinexplorar[st.fila-2][st.columna-2] = V[4];
-				sinexplorar[st.fila-2][st.columna-1] = V[5];
-				sinexplorar[st.fila-2][st.columna] = V[6];
-				sinexplorar[st.fila-2][st.columna+1] = V[7];
-				sinexplorar[st.fila-2][st.columna+2] = V[8];
-
-				sinexplorar[st.fila-3][st.columna-3] = V[9];
-				sinexplorar[st.fila-3][st.columna-2] = V[10];
-				sinexplorar[st.fila-3][st.columna-1] = V[11];
-				sinexplorar[st.fila-3][st.columna] = V[12];
-				sinexplorar[st.fila-3][st.columna+1] = V[13];
-				sinexplorar[st.fila-3][st.columna+2] = V[14];
-				sinexplorar[st.fila-3][st.columna+3] = V[15];
-				break;
-			case 1:
-				sinexplorar[st.fila-1][st.columna+1] = V[1];
-				sinexplorar[st.fila][st.columna+1] = V[2];
-				sinexplorar[st.fila+1][st.columna+1] = V[3];
-
-				sinexplorar[st.fila-2][st.columna+2] = V[4];
-				sinexplorar[st.fila-1][st.columna+2] = V[5];
-				sinexplorar[st.fila][st.columna+2] = V[6];
-				sinexplorar[st.fila+1][st.columna+2] = V[7];
-				sinexplorar[st.fila+2][st.columna+2] = V[8];
-
-				sinexplorar[st.fila-3][st.columna+3] = V[9];
-				sinexplorar[st.fila-2][st.columna+3] = V[10];
-				sinexplorar[st.fila-1][st.columna+3] = V[11];
-				sinexplorar[st.fila][st.columna+3] = V[12];
-				sinexplorar[st.fila+1][st.columna+3] = V[13];
-				sinexplorar[st.fila+2][st.columna+3] = V[14];
-				sinexplorar[st.fila+3][st.columna+3] = V[15];
-				break;
-			case 2:
-				sinexplorar[st.fila+1][st.columna+1] = V[1];
-				sinexplorar[st.fila+1][st.columna] = V[2];
-				sinexplorar[st.fila+1][st.columna-1] = V[3];
-
-				sinexplorar[st.fila+2][st.columna+2] = V[4];
-				sinexplorar[st.fila+2][st.columna+1] = V[5];
-				sinexplorar[st.fila+2][st.columna] = V[6];
-				sinexplorar[st.fila+2][st.columna-1] = V[7];
-				sinexplorar[st.fila+2][st.columna-2] = V[8];
-
-				sinexplorar[st.fila+3][st.columna+3] = V[9];
-				sinexplorar[st.fila+3][st.columna+2] = V[10];
-				sinexplorar[st.fila+3][st.columna+1] = V[11];
-				sinexplorar[st.fila+3][st.columna] = V[12];
-				sinexplorar[st.fila+3][st.columna-1] = V[13];
-				sinexplorar[st.fila+3][st.columna-2] = V[14];
-				sinexplorar[st.fila+3][st.columna-3] = V[15];
-				break;
-			case 3:
-				sinexplorar[st.fila+1][st.columna-1] = V[1];
-				sinexplorar[st.fila][st.columna-1] = V[2];
-				sinexplorar[st.fila-1][st.columna-1] = V[3];
-
-				sinexplorar[st.fila+2][st.columna-2] = V[4];
-				sinexplorar[st.fila+1][st.columna-2] = V[5];
-				sinexplorar[st.fila][st.columna-2] = V[6];
-				sinexplorar[st.fila-1][st.columna-2] = V[7];
-				sinexplorar[st.fila-2][st.columna-2] = V[8];
-
-				sinexplorar[st.fila+3][st.columna-3] = V[9];
-				sinexplorar[st.fila+2][st.columna-3] = V[10];
-				sinexplorar[st.fila+1][st.columna-3] = V[11];
-				sinexplorar[st.fila][st.columna-3] = V[12];
-				sinexplorar[st.fila-1][st.columna-3] = V[13];
-				sinexplorar[st.fila-2][st.columna-3] = V[14];
-				sinexplorar[st.fila-3][st.columna-3] = V[15];
-				break;
-		}
-	}
-}
-
-//Se comprueba el estado de la casilla de delante, si es valida o no.
-bool ComportamientoJugador::estadoCasillaDelante(estado &st){
-	int fil=st.fila, col=st.columna;
-
-  // se calcula cual es la casilla de delante
-	switch (st.orientacion) {
-		case 0: fil--; break;
-		case 1: col++; break;
-		case 2: fil++; break;
-		case 3: col--; break;
-	}
-
-	// se comprueba que el agente no se sale de los limites del mapa
-	if (fil<0 or fil>=200) return true;
-	if (col<0 or col>200) return true;
-
-	// Se comprueba que no haya un obstaculo que no limite el paso.
-	if (desconocidos[fil][col] != 'P' and desconocidos[fil][col] != 'M' and desconocidos[fil][col] != 'D'){
-		// No hay obstaculo, actualizo el parámetro st poniendo la casilla de delante.
-    st.fila = fil;
-		st.columna = col;
-		return false;
-	}
-	else{
-	  return true;
-	}
-}
-
-//Metodo para comprobar si hay un obstaculo enfrente o no.
-bool ComportamientoJugador::obstaculoEnfrenteImprovisto(estado &st, vector<unsigned char> V){
-	if(V[2] == 'P' || V[2] == 'M'){
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-
-//Metodo que actualiza el estado actual
-void ComportamientoJugador::updateEstadoActual(estado &st, Action accion){
-		switch (accion) {
-			case actFORWARD:
-				switch (st.orientacion) {
-					case 0: st.fila--; break;
-					case 1: st.columna++; break;
-					case 2: st.fila++; break;
-					case 3: st.columna--; break;
-				}
-				break;
-			case actTURN_L:
-				st.orientacion = (st.orientacion+3)%4;
-				break;
-			case actTURN_R:
-				st.orientacion = (st.orientacion+1)%4;
-				break;
-			case actIDLE:
-				break;
-		}
-}
-
-//REVISAAAR
-bool ComportamientoJugador::pathFinding_Desconocido(const estado &origen, list<Action> &plan) {
-	plan.clear();
-	set<estado,ComparaEstados> generados; // Lista de Cerrados
-	stack<nodo> pila;											// Lista de Abiertos
-
-  nodo current;
-	current.st = origen;
-	current.secuencia.empty();
-
-	pila.push(current);
-
-  while (!pila.empty() and desconocidos[current.st.fila][current.st.columna] != '?'){
-		pila.pop();
-		generados.insert(current.st);
-
-
-		// Generar descendiente de girar a la derecha
-		nodo hijoTurnR = current;
-		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
-		if (generados.find(hijoTurnR.st) == generados.end()){
-			hijoTurnR.secuencia.push_back(actTURN_R);
-			pila.push(hijoTurnR);
-		}
-		// Generar descendiente de girar a la izquierda
-		nodo hijoTurnL = current;
-		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
-		if (generados.find(hijoTurnL.st) == generados.end()){
-			hijoTurnL.secuencia.push_back(actTURN_L);
-			pila.push(hijoTurnL);
-		}
-		// Generar descendiente de avanzar
-		nodo hijoForward = current;
-		switch (hijoForward.st.orientacion) {
-			case 0: hijoForward.st.fila--; break;
-			case 1: hijoForward.st.columna++; break;
-			case 2: hijoForward.st.fila++; break;
-			case 3: hijoForward.st.columna--; break;
-		}
-		if(!estadoForwardnoValido(hijoForward.st)){
-			if (generados.find(hijoForward.st) == generados.end()){
-				hijoForward.secuencia.push_back(actFORWARD);
-				pila.push(hijoForward);
-			}
-		}
-
-		// Tomo el siguiente valor de la cola
-		if (!pila.empty()){
-			current = pila.top();
-		}
-	}
-
-  cout << "Terminada la busqueda\n";
-	if (desconocidos[current.st.fila][current.st.columna] == '?'){
-		cout << "Cargando el plan\n";
-		plan = current.secuencia;
-		cout << "Longitud del plan: " << plan.size() << endl;
-		PintaPlan(plan);
-		return true;
-	}
-	else {
-		cout << "No encontrado plan\n";
-	}
-	return false;
-}
-
-// ------- REVISAAR---
-bool ComportamientoJugador::pathFinding_K(const estado &origen, list<Action> &plan) {
-	cout << "Calculando camino hacia K" << endl;
-	plan.clear();
-	set<estado,ComparaEstados> generados; // Lista de Cerrados
-	queue<nodo> cola;											// Lista de Abiertos
-
-  nodo current;
-	current.st = origen;
-	current.secuencia.empty();
-
-	cola.push(current);
-
-  while (!cola.empty() and desconocidos[current.st.fila][current.st.columna] != 'K'){
-		cola.pop();
-		generados.insert(current.st);
-
-
-		// Generar descendiente de girar a la derecha
-		nodo hijoTurnR = current;
-		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
-		if (generados.find(hijoTurnR.st) == generados.end()){
-			hijoTurnR.secuencia.push_back(actTURN_R);
-			cola.push(hijoTurnR);
-		}
-		// Generar descendiente de girar a la izquierda
-		nodo hijoTurnL = current;
-		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
-		if (generados.find(hijoTurnL.st) == generados.end()){
-			hijoTurnL.secuencia.push_back(actTURN_L);
-			cola.push(hijoTurnL);
-		}
-		// Generar descendiente de avanzar
-		nodo hijoForward = current;
-		switch (hijoForward.st.orientacion) {
-			case 0: hijoForward.st.fila--; break;
-			case 1: hijoForward.st.columna++; break;
-			case 2: hijoForward.st.fila++; break;
-			case 3: hijoForward.st.columna--; break;
-		}
-
-		if (generados.find(hijoForward.st) == generados.end()){
-			hijoForward.secuencia.push_back(actFORWARD);
-			cola.push(hijoForward);
-		}
-
-
-		// Tomo el siguiente valor de la cola
-		if (!cola.empty()){
-			current = cola.front();
-		}
-	}
-
-  cout << "Terminada la busqueda\n";
-	if (desconocidos[current.st.fila][current.st.columna] == 'K'){
-		cout << "Cargando el plan\n";
-		plan = current.secuencia;
-		cout << "Longitud del plan: " << plan.size() << endl;
-		PintaPlan(plan);
-		return true;
-	}
-	else {
-		cout << "No encontrado plan\n";
-	}
-	return false;
-}
 
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------
@@ -868,7 +395,6 @@ void ComportamientoJugador::PintaPlan(list<Action> plan) {
 	}
 	cout << endl;
 }
-
 
 
 
