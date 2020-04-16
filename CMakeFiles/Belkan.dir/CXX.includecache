@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/Escritorio/practica2_linux/bin_src/juego.cc
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/bin_src/juego.cc
 motorlib.hpp
-/home/alex/Escritorio/practica2_linux/bin_src/motorlib.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/bin_src/motorlib.hpp
 
 Comportamientos_Jugador/aldeano.hpp
 chrono

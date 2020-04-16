@@ -6,73 +6,73 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/Escritorio/practica2_linux/src/glui/algebra3.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/algebra3.cpp
 glui/algebra3.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/algebra3.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/algebra3.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 cmath
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/arcball.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/arcball.cpp
 glui/arcball.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/arcball.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/arcball.h
 cstdio
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_add_controls.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_add_controls.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_bitmap_img_data.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_bitmap_img_data.cpp
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_bitmaps.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_bitmaps.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 cassert
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_button.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_button.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_checkbox.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_checkbox.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_column.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_column.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_commandline.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_commandline.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_control.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_control.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_edittext.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_edittext.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cassert
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_filebrowser.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_filebrowser.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 sys/types.h
 -
 windows.h
@@ -84,121 +84,121 @@ unistd.h
 sys/stat.h
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_list.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_list.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cmath
 -
 sys/timeb.h
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_listbox.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_listbox.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_mouse_iaction.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_mouse_iaction.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_node.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_node.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_panel.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_panel.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_radio.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_radio.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cassert
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_rollout.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_rollout.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_rotation.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_rotation.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/arcball.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/arcball.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/arcball.h
 glui/algebra3.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/algebra3.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/algebra3.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_scrollbar.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_scrollbar.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cmath
 -
 cassert
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_separator.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_separator.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_spinner.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_spinner.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cmath
 -
 cassert
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_statictext.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_statictext.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_string.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_string.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 stdarg.h
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_textbox.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_textbox.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 cmath
 -
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_translation.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_translation.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 glui/algebra3.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/algebra3.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/algebra3.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_tree.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_tree.cpp
 glui/glui_internal_control.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal_control.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal_control.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_treepanel.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_treepanel.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/glui_window.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui_window.cpp
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/quaternion.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/quaternion.cpp
 glui/quaternion.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/quaternion.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/quaternion.h
 cmath
 -
 glui/glui_internal.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui_internal.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui_internal.h
 
-/home/alex/Escritorio/practica2_linux/src/glui/viewmodel.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/viewmodel.cpp
 glui/viewmodel.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/viewmodel.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/viewmodel.h
 glui/glui.h
-/home/alex/Escritorio/practica2_linux/src/glui/glui/glui.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/glui/glui/glui.h
 cstdio
 -
 cstdlib

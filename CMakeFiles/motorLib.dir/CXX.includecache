@@ -6,37 +6,37 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/entidad.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/entidad.cpp
 motorlib/entidad.hpp
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib/entidad.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib/entidad.hpp
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/mapa.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/mapa.cpp
 motorlib/mapa.hpp
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib/mapa.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib/mapa.hpp
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/monitor.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/monitor.cpp
 motorlib/monitor.hpp
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib/monitor.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib/monitor.hpp
 fstream
 -
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/motor_grafico.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motor_grafico.cpp
 motorlib.hpp
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib.hpp
 glui/glui.h
 -
 dirent.h
 -
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/motor_juego.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motor_juego.cpp
 motorlib.hpp
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib.hpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib.hpp
 unistd.h
 -
 
-/home/alex/Escritorio/practica2_linux/src/motorlib/util.cpp
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/util.cpp
 motorlib/util.h
-/home/alex/Escritorio/practica2_linux/src/motorlib/motorlib/util.h
+/home/alex/Escritorio/UGR/Segundo/IA/practica/practica2/practica2_linux/src/motorlib/motorlib/util.h
 
 Comportamientos_Jugador/aldeano.hpp
 chrono

@@ -32,7 +32,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	else {
 		// Estoy en el nivel 2
-		cout << "Aún no implementado el nivel 2" << endl;
+		cout << "Nivel 2 en procesito" << endl;
 	}
 	accion = plan.front();
   return accion;
