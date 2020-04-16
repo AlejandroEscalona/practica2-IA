@@ -16,8 +16,8 @@
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
 	Action accion = actIDLE;
-	// Estoy en el nivel 1  
-
+	// Estoy en el nivel 1
+	
 	actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
 	actual.orientacion = sensores.sentido;
@@ -34,6 +34,10 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	else {
 		// Estoy en el nivel 2
+<<<<<<< HEAD
+		cout << "nivel 2 esta casi apunto " << endl;
+	}
+=======
 		cout << "En proceso nivel 2" << endl;
 
 		if(!estadoActualIniciado){
@@ -139,6 +143,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	} // FIN DEL ELSE
 
 	
+>>>>>>> d3110eb35b0618bc32e8e2d64b83537348183aef
 	accion = plan.front();
   return accion;
 }
@@ -149,16 +154,17 @@ Action ComportamientoJugador::think(Sensores sensores) {
 bool ComportamientoJugador::pathFinding (int level, const estado &origen, const estado &destino, list<Action> &plan){
 	switch (level){
 		case 1: cout << "Busqueda en profundad\n";
-			      return pathFinding_Profundidad(origen,destino,plan);
+			      	return pathFinding_Profundidad(origen,destino,plan);
 						break;
 		case 2: cout << "Busqueda en Anchura\n";
-			      return pathFinding_Anchura(origen,destino,plan);
+			      	return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
-				 return pathFinding_CostoUniforme(origen,destino,plan);
+				 	return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 		case 4: cout << "Busqueda para el reto\n";
-						return pathFinding_CostoUniforme(origen,destino,plan);
+				 	return pathFinding_CostoUniforme(origen,destino,plan);
+						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
 						break;
 	}
 	cout << "Comportamiento sin implementar\n";
@@ -231,6 +237,7 @@ struct ComparaEstados{
 // secuencia de acciones en plan, una lista de acciones.
 bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const estado &destino, list<Action> &plan) {
 	//Borro la lista
+	cout << " Estoy dentro de profundidad"<<endl;
 	cout << "Calculando plan\n";
 	plan.clear();
 	set<estado,ComparaEstados> generados;						 // Lista de Cerrados (lista de nodos que ya han sido expandidos pero no explorados)
@@ -395,11 +402,11 @@ void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 
 
 bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan){
-	//Borro la lista
+	
 	cout << "Calculando plan\n";
 	plan.clear();
-	queue<nodoPonderado> cola;											// Lista de Abiertos
-	set<estado,ComparaEstados> generados;      	// Lista de Cerrados
+	queue<nodoPonderado> cola;										
+	set<estado,ComparaEstados> generados;      	
 	set<nodoPonderado,nodosComparados> seleccion;
 	
 
