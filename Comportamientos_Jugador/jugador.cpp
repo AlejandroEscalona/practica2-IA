@@ -13,10 +13,10 @@
 // que se piden en la práctica. Tiene como entrada la información de los
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
-	Action accion = actIDLE;
+	//Action accion = actIDLE;
 	// Estoy en el nivel 1
 
-	actual.fila        = sensores.posF;   //es un estado
+	/* actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
 	actual.orientacion = sensores.sentido;
 
@@ -25,17 +25,63 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	cout << "Ori : " << actual.orientacion << endl;
 
 	destino.fila       = sensores.destinoF;
-	destino.columna    = sensores.destinoC;
+	destino.columna    = sensores.destinoC; */
 
-	if (sensores.nivel != 4){
+	/* if (sensores.nivel != 4){
 		bool hay_plan = pathFinding (sensores.nivel, actual, destino, plan);
 	}
-	else {
+	else { */
 		// Estoy en el nivel 2
+
+	/* mapaResultado(sensores.posF)
+
 		cout << "Nivel 2 en procesito" << endl;
 	}
 	accion = plan.front();
-  return accion;
+  return accion; */
+
+
+	mapaResultado[sensores.posF][sensores.posC] = sensores.terreno[0];
+	switch (sensores.sentido){
+		case norte: mapaResultado[sensores.posF - 1][sensores.posC] = sensores.terreno[2];
+		break;
+
+		case este: mapaResultado[sensores.posF][sensores.posC + 1] = sensores.terreno[2];
+		break;
+
+		case sur: mapaResultado[sensores.posF + 1][sensores.posC] = sensores.terreno[2];
+		break;
+
+		case oeste: mapaResultado[sensores.posF][sensores.posC - 1] = sensores.terreno[2];
+		break;
+
+}
+
+	if(!hayplan){
+		actual.fila = sensores.posF;
+		actual.columna = sensores.posC;
+		actual.orientacion = sensores.sentido;
+		destino.fila = sensores.destinoF;
+		destino.columna = sensores.destinoC;
+		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+	}
+
+	Action sigAccion;
+	if( hayplan && plan.size()>0){
+		sigAccion = plan.front();
+		plan.erase(plan.begin());
+	}
+	else
+	{
+				hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+				sigAccion = plan.front();
+		
+
+	}
+	return sigAccion;
+
+
+
 }
 
 
@@ -44,15 +90,16 @@ Action ComportamientoJugador::think(Sensores sensores) {
 bool ComportamientoJugador::pathFinding (int level, const estado &origen, const estado &destino, list<Action> &plan){
 	switch (level){
 		case 1: cout << "Busqueda en profundad\n";
-			      return pathFinding_Profundidad(origen,destino,plan);
+			      	return pathFinding_Profundidad(origen,destino,plan);
 						break;
 		case 2: cout << "Busqueda en Anchura\n";
-			      return pathFinding_Anchura(origen,destino,plan);
+			      	return pathFinding_Anchura(origen,destino,plan);
 						break;
 		case 3: cout << "Busqueda Costo Uniforme\n";
-				 return pathFinding_CostoUniforme(origen,destino,plan);
+				 	return pathFinding_CostoUniforme(origen,destino,plan);
 						break;
 		case 4: cout << "Busqueda para el reto\n";
+					return pathFinding_CostoUniforme(origen,destino,plan);
 						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
 						break;
 	}
@@ -314,7 +361,8 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 		// Generar descendiente de girar a la derecha
 		nodoPonderado hijoTurnR = current;
 		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
-		calcularPeso(hijoTurnR);
+		//calcularPeso(hijoTurnR);
+		hijoTurnR.peso = current.peso+1;
 		if (generados.find(hijoTurnR.st) == generados.end()){
 			hijoTurnR.secuencia.push_back(actTURN_R);
 			seleccion.insert(hijoTurnR);
@@ -324,7 +372,8 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 		// Generar descendiente de girar a la izquierda
 		nodoPonderado hijoTurnL = current;
 		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
-		calcularPeso(hijoTurnL);
+		hijoTurnL.peso = current.peso+1;
+		//calcularPeso(hijoTurnL);
 		if (generados.find(hijoTurnL.st) == generados.end()){
 			hijoTurnL.secuencia.push_back(actTURN_L);
 			seleccion.insert(hijoTurnL);
@@ -332,7 +381,9 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 
 		// Generar descendiente de avanzar
 		nodoPonderado hijoForward = current;
+		int pesito = hijoForward.peso;
 		calcularPeso(hijoForward);
+		hijoForward.peso + pesito;
 		if (!HayObstaculoDelante(hijoForward.st)){
 			if (generados.find(hijoForward.st) == generados.end()){
 				hijoForward.secuencia.push_back(actFORWARD);
