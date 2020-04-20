@@ -41,7 +41,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
   return accion; */
 
 
-	mapaResultado[sensores.posF][sensores.posC] = sensores.terreno[0];
+	/* mapaResultado[sensores.posF][sensores.posC] = sensores.terreno[0];
 	switch (sensores.sentido){
 		case norte: mapaResultado[sensores.posF - 1][sensores.posC] = sensores.terreno[2];
 		break;
@@ -55,7 +55,10 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		case oeste: mapaResultado[sensores.posF][sensores.posC - 1] = sensores.terreno[2];
 		break;
 
-}
+} */
+
+	updateMapa(actual, sensores.terreno);//
+	
 
 	if(!hayplan){
 		actual.fila = sensores.posF;
@@ -70,11 +73,16 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	if( hayplan && plan.size()>0){
 		sigAccion = plan.front();
 		plan.erase(plan.begin());
+		updateMapa(actual, sensores.terreno);//
+		updateEstadoActual(actual, sigAccion);//
 	}
 	else
 	{
+						
 				hayplan = pathFinding(sensores.nivel, actual, destino, plan);
-				sigAccion = plan.front();
+				updateMapa(actual, sensores.terreno);//
+
+				//sigAccion = plan.front();
 		
 
 	}
@@ -422,6 +430,112 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 	return false;
 }
 
+//metodo para ir explorando el mapa
+void ComportamientoJugador::updateMapa(estado &st, vector<unsigned char> vector){
+	mapaResultado[st.fila][st.columna] = vector[0];
+	if(st.fila > 0 and st.fila < (mapaResultado.size()) and st.columna > 0 and st.fila < (mapaResultado.size())){
+		switch (st.orientacion) {
+			case 0:
+				mapaResultado[st.fila-1][st.columna-1] = vector[1];
+				mapaResultado[st.fila-1][st.columna] = vector[2];
+				mapaResultado[st.fila-1][st.columna+1] = vector[3];
+
+				mapaResultado[st.fila-2][st.columna-2] = vector[4];
+				mapaResultado[st.fila-2][st.columna-1] = vector[5];
+				mapaResultado[st.fila-2][st.columna] = vector[6];
+				mapaResultado[st.fila-2][st.columna+1] = vector[7];
+				mapaResultado[st.fila-2][st.columna+2] = vector[8];
+
+				mapaResultado[st.fila-3][st.columna-3] = vector[9];
+				mapaResultado[st.fila-3][st.columna-2] = vector[10];
+				mapaResultado[st.fila-3][st.columna-1] = vector[11];
+				mapaResultado[st.fila-3][st.columna] = vector[12];
+				mapaResultado[st.fila-3][st.columna+1] = vector[13];
+				mapaResultado[st.fila-3][st.columna+2] = vector[14];
+				mapaResultado[st.fila-3][st.columna+3] = vector[15];
+				break;
+			case 1:
+				mapaResultado[st.fila-1][st.columna+1] = vector[1];
+				mapaResultado[st.fila][st.columna+1] = vector[2];
+				mapaResultado[st.fila+1][st.columna+1] = vector[3];
+
+				mapaResultado[st.fila-2][st.columna+2] = vector[4];
+				mapaResultado[st.fila-1][st.columna+2] = vector[5];
+				mapaResultado[st.fila][st.columna+2] = vector[6];
+				mapaResultado[st.fila+1][st.columna+2] = vector[7];
+				mapaResultado[st.fila+2][st.columna+2] = vector[8];
+
+				mapaResultado[st.fila-3][st.columna+3] = vector[9];
+				mapaResultado[st.fila-2][st.columna+3] = vector[10];
+				mapaResultado[st.fila-1][st.columna+3] = vector[11];
+				mapaResultado[st.fila][st.columna+3] = vector[12];
+				mapaResultado[st.fila+1][st.columna+3] = vector[13];
+				mapaResultado[st.fila+2][st.columna+3] = vector[14];
+				mapaResultado[st.fila+3][st.columna+3] = vector[15];
+				break;
+			case 2:
+				mapaResultado[st.fila+1][st.columna+1] = vector[1];
+				mapaResultado[st.fila+1][st.columna] = vector[2];
+				mapaResultado[st.fila+1][st.columna-1] = vector[3];
+
+				mapaResultado[st.fila+2][st.columna+2] = vector[4];
+				mapaResultado[st.fila+2][st.columna+1] = vector[5];
+				mapaResultado[st.fila+2][st.columna] = vector[6];
+				mapaResultado[st.fila+2][st.columna-1] = vector[7];
+				mapaResultado[st.fila+2][st.columna-2] = vector[8];
+
+				mapaResultado[st.fila+3][st.columna+3] = vector[9];
+				mapaResultado[st.fila+3][st.columna+2] = vector[10];
+				mapaResultado[st.fila+3][st.columna+1] = vector[11];
+				mapaResultado[st.fila+3][st.columna] = vector[12];
+				mapaResultado[st.fila+3][st.columna-1] = vector[13];
+				mapaResultado[st.fila+3][st.columna-2] = vector[14];
+				mapaResultado[st.fila+3][st.columna-3] = vector[15];
+				break;
+			case 3:
+				mapaResultado[st.fila+1][st.columna-1] = vector[1];
+				mapaResultado[st.fila][st.columna-1] = vector[2];
+				mapaResultado[st.fila-1][st.columna-1] = vector[3];
+
+				mapaResultado[st.fila+2][st.columna-2] = vector[4];
+				mapaResultado[st.fila+1][st.columna-2] = vector[5];
+				mapaResultado[st.fila][st.columna-2] = vector[6];
+				mapaResultado[st.fila-1][st.columna-2] = vector[7];
+				mapaResultado[st.fila-2][st.columna-2] = vector[8];
+
+				mapaResultado[st.fila+3][st.columna-3] = vector[9];
+				mapaResultado[st.fila+2][st.columna-3] = vector[10];
+				mapaResultado[st.fila+1][st.columna-3] = vector[11];
+				mapaResultado[st.fila][st.columna-3] = vector[12];
+				mapaResultado[st.fila-1][st.columna-3] = vector[13];
+				mapaResultado[st.fila-2][st.columna-3] = vector[14];
+				mapaResultado[st.fila-3][st.columna-3] = vector[15];
+				break;
+		}
+	}
+}
+
+//metodo para actualizar el estado actual
+void ComportamientoJugador::updateEstadoActual(estado &st, Action accion){
+		switch (accion) {
+			case actFORWARD:
+				switch (st.orientacion) {
+					case 0: st.fila--; break;
+					case 1: st.columna++; break;
+					case 2: st.fila++; break;
+					case 3: st.columna--; break;
+				}
+				break;
+			case actTURN_L:
+				st.orientacion = (st.orientacion+3)%4;
+				break;
+			case actTURN_R:
+				st.orientacion = (st.orientacion+1)%4;
+				break;
+			case actIDLE:
+				break;
+		}
+}
 
 
 //---------FUNCIONES PARA PINTAR EL MAPA Y DEMÁS (NO TOCAR )-------

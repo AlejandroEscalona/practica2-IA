@@ -72,6 +72,8 @@ class ComportamientoJugador : public Comportamiento {
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan);
     void calcularPeso( nodoPonderado &nodo);
+    void updateMapa(estado &st, vector<unsigned char> vector);
+    void updateEstadoActual(estado &st, Action accion);
 
 };
 
