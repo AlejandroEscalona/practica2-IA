@@ -7,7 +7,7 @@
 #include <set>
 #include <stack>
 #include <queue>
-
+//tareas de hacer el metodo para buscar botas
 
 // Este es el método principal que debe contener los 4 Comportamientos_Jugador
 // que se piden en la práctica. Tiene como entrada la información de los
