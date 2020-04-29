@@ -11,10 +11,17 @@ struct estado {
   int orientacion;
 };
 
+struct estadoPonderado{
+	estado st;
+	int recorrido;
+};
+
 struct nodoPonderado{
-  estado st;
+  estadoPonderado st;
   list<Action> secuencia;
   int peso;
+  bool zapatillas, bikini;
+  int f;
 };
 
 struct nodosComparados{
@@ -36,6 +43,8 @@ class ComportamientoJugador : public Comportamiento {
       destino.columna = -1;
       destino.orientacion = -1;
       hayplan=false;
+      zapatillas = false;
+      bikini = false;
     }
     ComportamientoJugador(std::vector< std::vector< unsigned char> > mapaR) : Comportamiento(mapaR) {
       // Inicializar Variables de Estado
@@ -45,6 +54,8 @@ class ComportamientoJugador : public Comportamiento {
       destino.columna = -1;
       destino.orientacion = -1;
       hayplan=false;
+      zapatillas = false;
+      bikini = false;
     }
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
     ~ComportamientoJugador(){}
@@ -60,6 +71,7 @@ class ComportamientoJugador : public Comportamiento {
     estado actual, destino;
     list<Action> plan;
     bool hayplan;
+    bool bikini, zapatillas;
 
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
@@ -71,7 +83,7 @@ class ComportamientoJugador : public Comportamiento {
     //Metodos realizados
     bool pathFinding_Anchura(const estado &origen, const estado &destino, list<Action> &plan);
     bool pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan);
-    void calcularPeso( nodoPonderado &nodo);
+    int calcularPeso( nodoPonderado &nodo);
     void updateMapa(estado &st, vector<unsigned char> vector);
     void updateEstadoActual(estado &st, Action accion);
 

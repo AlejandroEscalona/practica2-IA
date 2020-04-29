@@ -176,6 +176,29 @@ struct ComparaEstados{
 	}
 };
 
+struct ComparaEstadosPonderados{
+	bool operator()(const estadoPonderado &a, const estadoPonderado &n) const{
+		if ((a.st.fila > n.st.fila) or (a.st.fila == n.st.fila and a.st.columna > n.st.columna) or
+	      (a.st.fila == n.st.fila and a.st.columna == n.st.columna and a.st.orientacion > n.st.orientacion))
+			return true;
+		else
+			return false;
+	}
+};
+
+struct ComparaEstadosNodoPonderados{
+	bool operator()(const nodoPonderado &a, const nodoPonderado &b) const{
+		if (a.peso < b.peso)
+			return true;
+		else if (a.peso  == b.peso and a.st.recorrido < b.st.recorrido)
+			return true;
+		else
+			return false;
+	}
+};
+
+
+
 
 // Implementación de la búsqueda en profundidad.
 // Entran los puntos origen y destino y devuelve la
@@ -223,7 +246,7 @@ bool ComportamientoJugador::pathFinding_Profundidad(const estado &origen, const 
 				pila.push(hijoForward);
 			}
 		}
-
+		
 		// Tomo el siguiente valor de la pila
 		if (!pila.empty()){
 			current = pila.top();
@@ -270,7 +293,7 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 
   while (!cola.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
 
-		cola.pop();
+		//cola.pop();
 		generados.insert(current.st);
 
 
@@ -300,14 +323,14 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 			}
 		}
 
-		// Tomo el siguiente valor de la cola
-		if (!cola.empty()){
-			//Aqui falta comprobar que no está en cerrados.
+		current = cola.front();
+		while (!cola.empty() && generados.find(current.st) != generados.end()){
 			current = cola.front();
+			cola.pop();
 		}
 	}
 
-  cout << "Terminada la busqueda\n";
+  cout << "Terminada la busqueda de anchura\n";
 
 	if (current.st.fila == destino.fila and current.st.columna == destino.columna){
 		cout << "Cargando el plan\n";
@@ -332,89 +355,125 @@ bool ComportamientoJugador::pathFinding_Anchura(const estado &origen, const esta
 // Entran los puntos origen y destino y devuelve la
 // secuencia de acciones en plan, una lista de acciones.
 
-void ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
-	int columna = nodo.st.columna;
-	int fila = nodo.st.fila;
+int ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
+	int peso;
+	int columna = nodo.st.st.columna;
+	int fila = nodo.st.st.fila;
 	char casilla = mapaResultado[fila][columna];
 	switch(casilla){
-		case 'T': nodo.peso = 2; break;
-		case 'A': nodo.peso = 100; break;
-		case 'B': nodo.peso = 50; break;
-		default: nodo.peso = 1; break;
+		case 'T': peso = 2; break;
+		case 'A': 
+				 if(!nodo.bikini)peso = 100;
+				 else{peso = 10;}
+				 break;
+		case 'B':
+		 		 if(!nodo.zapatillas)peso = 50;
+				 else{peso=5;}
+		  		 break;
+		default: peso = 1; break;
 	}
+	return peso;
 }
+
 
 
 bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, const estado &destino, list<Action> &plan){
 	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
-	queue<nodoPonderado> cola;											// Lista de Abiertos
-	set<estado,ComparaEstados> generados;      	// Lista de Cerrados
-	set<nodoPonderado,nodosComparados> seleccion;
+	multiset<nodoPonderado, ComparaEstadosNodoPonderados> cola;											
+	set<estadoPonderado,ComparaEstadosPonderados> generados;      	
+	set<estadoPonderado,ComparaEstadosPonderados> seleccion;
 	
 
   nodoPonderado current;
-	current.st = origen;
+	current.st.st = origen;
 	current.secuencia.empty();
 	current.peso = 0;
+	current.st.recorrido=0;
+	current.f = 0;
 
-	cola.push(current);
+	cola.insert(current);
+	generados.insert(current.st);
+	cout << "LINEA 398"<<endl;
+  while (!cola.empty() and (current.st.st.fila!=destino.fila or current.st.st.columna != destino.columna)){
 
-  while (!cola.empty() and (current.st.fila!=destino.fila or current.st.columna != destino.columna)){
+		cola.erase(cola.begin());
+		generados.erase(generados.find(current.st));
 
-		cola.pop();
-		generados.insert(current.st);
-
+		seleccion.insert(current.st);
+		//if (mapaResultado[current.st.st.fila][current.st.st.columna]=='K') current.bikini=true;
+		//else if (mapaResultado[current.st.st.fila][current.st.st.columna]=='D') current.zapatillas=true;
+	cout << "LINEA 407"<<endl;
 
 		// Generar descendiente de girar a la derecha
 		nodoPonderado hijoTurnR = current;
-		hijoTurnR.st.orientacion = (hijoTurnR.st.orientacion+1)%4;
-		//calcularPeso(hijoTurnR);
-		hijoTurnR.peso = current.peso+1;
-		if (generados.find(hijoTurnR.st) == generados.end()){
+		hijoTurnR.st.st.orientacion = (hijoTurnR.st.st.orientacion+1)%4;
+		if(seleccion.find(hijoTurnR.st) == seleccion.end()){
 			hijoTurnR.secuencia.push_back(actTURN_R);
-			seleccion.insert(hijoTurnR);
+			int peso= calcularPeso(hijoTurnR);
+			hijoTurnR.peso+=peso;
+			hijoTurnR.st.recorrido+=peso;
+			auto iterator = generados.find(hijoTurnR.st);
+			if(iterator == generados.end() )
+			{
+				cola.insert(hijoTurnR);
+				generados.insert(hijoTurnR.st);
+			}
+			else if (hijoTurnR.st.recorrido < iterator->recorrido ){
+				generados.erase(iterator);
+				generados.insert(hijoTurnR.st);
 
-		}
-
-		// Generar descendiente de girar a la izquierda
-		nodoPonderado hijoTurnL = current;
-		hijoTurnL.st.orientacion = (hijoTurnL.st.orientacion+3)%4;
-		hijoTurnL.peso = current.peso+1;
-		//calcularPeso(hijoTurnL);
-		if (generados.find(hijoTurnL.st) == generados.end()){
-			hijoTurnL.secuencia.push_back(actTURN_L);
-			seleccion.insert(hijoTurnL);
-		}
-
-		// Generar descendiente de avanzar
-		nodoPonderado hijoForward = current;
-		int pesito = hijoForward.peso;
-		calcularPeso(hijoForward);
-		hijoForward.peso + pesito;
-		if (!HayObstaculoDelante(hijoForward.st)){
-			if (generados.find(hijoForward.st) == generados.end()){
-				hijoForward.secuencia.push_back(actFORWARD);
-				seleccion.insert(hijoForward);
 			}
 		}
+		// Generar descendiente de girar a la izquierda
+		nodoPonderado hijoTurnL = current;
+		hijoTurnL.st.st.orientacion = (hijoTurnL.st.st.orientacion+3)%4;
+		if(seleccion.find(hijoTurnL.st) == seleccion.end()){
+			hijoTurnL.secuencia.push_back(actTURN_L);
+			int peso=calcularPeso(hijoTurnL);
+			hijoTurnL.peso+=peso;
+			hijoTurnL.st.recorrido+=peso;
+			auto iterator = generados.find(hijoTurnL.st);
+			if(iterator == generados.end() )
+			{
+				cola.insert(hijoTurnL);
+				generados.insert(hijoTurnL.st);
+			}
+			else if (hijoTurnL.st.recorrido < iterator->recorrido ){
+				generados.erase(iterator);
+				generados.insert(hijoTurnL.st);
 
-		set<nodoPonderado, nodosComparados>::iterator it;
-		for(it=seleccion.begin(); it != seleccion.end(); it++)
-			cola.push(*it);
-
-			seleccion.clear();
-
-		// Tomo el siguiente valor de la cola
-		if (!cola.empty()){
-			current = cola.front();
+			}
 		}
+		// Generar descendiente de avanzar
+		nodoPonderado hijoForward = current;
+		hijoForward.st.st.orientacion = (hijoForward.st.st.orientacion+3)%4;
+		if(seleccion.find(hijoForward.st) == seleccion.end()){
+			hijoForward.secuencia.push_back(actFORWARD);
+			int peso=calcularPeso(hijoForward);
+			hijoForward.peso+=peso;
+			hijoForward.st.recorrido+=peso;
+			auto iterator = generados.find(hijoForward.st);
+			if(iterator == generados.end() )
+			{
+				cola.insert(hijoForward);
+				generados.insert(hijoForward.st);
+			}
+			else if (hijoForward.st.recorrido < iterator->recorrido ){
+				generados.erase(iterator);
+				generados.insert(hijoForward.st);
+
+			}
+		}
+		cout << "LINEA 469"<<endl;
+		current = (*cola.begin());
 	}
 
-  cout << "Terminada la busqueda\n";
+  cout << "Terminada la busqueda por Coste Uniforme\n";
+	cout << "LINEA 474"<<endl;
 
-	if (current.st.fila == destino.fila and current.st.columna == destino.columna){
+	if (current.st.st.fila == destino.fila and current.st.st.columna == destino.columna){
 		cout << "Cargando el plan\n";
 		plan = current.secuencia;
 		cout << "Longitud del plan: " << plan.size() << endl;
