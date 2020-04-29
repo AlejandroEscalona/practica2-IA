@@ -395,21 +395,23 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 
 	cola.insert(current);
 	generados.insert(current.st);
-	cout << "LINEA 398"<<endl;
+	
   while (!cola.empty() and (current.st.st.fila!=destino.fila or current.st.st.columna != destino.columna)){
 
 		cola.erase(cola.begin());
 		generados.erase(generados.find(current.st));
 
+
 		seleccion.insert(current.st);
-		//if (mapaResultado[current.st.st.fila][current.st.st.columna]=='K') current.bikini=true;
-		//else if (mapaResultado[current.st.st.fila][current.st.st.columna]=='D') current.zapatillas=true;
-	cout << "LINEA 407"<<endl;
+		if (mapaResultado[current.st.st.fila][current.st.st.columna]=='K') current.bikini=true;
+		else if (mapaResultado[current.st.st.fila][current.st.st.columna]=='D') current.zapatillas=true;
+
 
 		// Generar descendiente de girar a la derecha
 		nodoPonderado hijoTurnR = current;
 		hijoTurnR.st.st.orientacion = (hijoTurnR.st.st.orientacion+1)%4;
 		if(seleccion.find(hijoTurnR.st) == seleccion.end()){
+			
 			hijoTurnR.secuencia.push_back(actTURN_R);
 			int peso= calcularPeso(hijoTurnR);
 			hijoTurnR.peso+=peso;
@@ -430,6 +432,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 		nodoPonderado hijoTurnL = current;
 		hijoTurnL.st.st.orientacion = (hijoTurnL.st.st.orientacion+3)%4;
 		if(seleccion.find(hijoTurnL.st) == seleccion.end()){
+			
 			hijoTurnL.secuencia.push_back(actTURN_L);
 			int peso=calcularPeso(hijoTurnL);
 			hijoTurnL.peso+=peso;
@@ -448,30 +451,32 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 		}
 		// Generar descendiente de avanzar
 		nodoPonderado hijoForward = current;
-		hijoForward.st.st.orientacion = (hijoForward.st.st.orientacion+3)%4;
-		if(seleccion.find(hijoForward.st) == seleccion.end()){
-			hijoForward.secuencia.push_back(actFORWARD);
-			int peso=calcularPeso(hijoForward);
-			hijoForward.peso+=peso;
-			hijoForward.st.recorrido+=peso;
-			auto iterator = generados.find(hijoForward.st);
-			if(iterator == generados.end() )
-			{
-				cola.insert(hijoForward);
-				generados.insert(hijoForward.st);
-			}
-			else if (hijoForward.st.recorrido < iterator->recorrido ){
-				generados.erase(iterator);
-				generados.insert(hijoForward.st);
+		if(!HayObstaculoDelante(hijoForward.st.st)){
+			if(seleccion.find(hijoForward.st) == seleccion.end()){
+					
+				hijoForward.secuencia.push_back(actFORWARD);
+				int peso=calcularPeso(hijoForward);
+				hijoForward.peso+=peso;
+				hijoForward.st.recorrido+=peso;
+				auto iterator = generados.find(hijoForward.st);
+				if(iterator == generados.end() )
+				{
+					cola.insert(hijoForward);
+					generados.insert(hijoForward.st);
+				}
+				else if (hijoForward.st.recorrido < iterator->recorrido ){
+					generados.erase(iterator);
+					generados.insert(hijoForward.st);
 
+				}
 			}
 		}
-		cout << "LINEA 469"<<endl;
+		
 		current = (*cola.begin());
 	}
 
   cout << "Terminada la busqueda por Coste Uniforme\n";
-	cout << "LINEA 474"<<endl;
+	
 
 	if (current.st.st.fila == destino.fila and current.st.st.columna == destino.columna){
 		cout << "Cargando el plan\n";
