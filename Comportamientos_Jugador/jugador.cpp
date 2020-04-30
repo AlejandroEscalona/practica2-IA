@@ -13,10 +13,10 @@
 // que se piden en la práctica. Tiene como entrada la información de los
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
-	//Action accion = actIDLE;
+	Action accion = actIDLE;
 	// Estoy en el nivel 1
 
-	/* actual.fila        = sensores.posF;   //es un estado
+	 actual.fila        = sensores.posF;   //es un estado
 	actual.columna     = sensores.posC;
 	actual.orientacion = sensores.sentido;
 
@@ -25,20 +25,20 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	cout << "Ori : " << actual.orientacion << endl;
 
 	destino.fila       = sensores.destinoF;
-	destino.columna    = sensores.destinoC; */
+	destino.columna    = sensores.destinoC; 
 
-	/* if (sensores.nivel != 4){
+	 if (sensores.nivel != 4){
 		bool hay_plan = pathFinding (sensores.nivel, actual, destino, plan);
 	}
-	else { */
+	else { 
 		// Estoy en el nivel 2
 
-	/* mapaResultado(sensores.posF)
+	//mapaResultado(sensores.posF)
 
 		cout << "Nivel 2 en procesito" << endl;
 	}
 	accion = plan.front();
-  return accion; */
+  return accion; 
 
 
 	/* mapaResultado[sensores.posF][sensores.posC] = sensores.terreno[0];
@@ -55,7 +55,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		case oeste: mapaResultado[sensores.posF][sensores.posC - 1] = sensores.terreno[2];
 		break;
 
-} */
+} 
 
 	updateMapa(actual, sensores.terreno);//
 	
@@ -88,7 +88,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	return sigAccion;
 
-
+*/
 
 }
 
