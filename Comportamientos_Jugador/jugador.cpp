@@ -41,18 +41,49 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	accion = plan.front();
   return accion; 
 */
+		estado st;
 
-
-	//updateMapa(actual, sensores.terreno);
-	
-
-	if(!hayplan){
+		//Para saber donde estoy en todo momento
 		actual.fila = sensores.posF;
 		actual.columna = sensores.posC;
 		actual.orientacion = sensores.sentido;
 		destino.fila = sensores.destinoF;
 		destino.columna = sensores.destinoC;
+
+	st.fila = fil;
+	st.columna = col;
+	st.orientacion = brujula;
+	
+	//Marcar si paso por bikini o zapatillas
+	if (sensores.terreno[0]=='K') bikini = true;
+	if (sensores.terreno[0]=='D') zapatillas = true;
+
+	/* estado st2 = st;
+	if (plan.front() == actFORWARD and (HayObstaculoDelante(st2) or sensores.superficie[2]!='_')){
+		if (sensores.superficie[2]!='_'){
+			plan.push_front(actIDLE);
+		}
+		else {
+			hayplan = false;
+		}
+  } */
+
+
+	if(!hayplan){
+		/* actual.fila = sensores.posF;
+		actual.columna = sensores.posC;
+		actual.orientacion = sensores.sentido;
+		destino.fila = sensores.destinoF;
+		destino.columna = sensores.destinoC; */
 		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+	}
+
+	// Nuevo objetivo marcado.
+	if (hayplan and (sensores.destinoF != destino.fila or sensores.destinoC != destino.columna)){
+		//cout << "El destino ha cambiado\n";
+		hayplan = false;
+		destino.fila = sensores.destinoF;
+		destino.columna = sensores.destinoC;
 	}
 
 	Action sigAccion;
