@@ -21,7 +21,6 @@ struct nodoPonderado{
   list<Action> secuencia;
   int peso;
   bool zapatillas, bikini;
-  int f;
 };
 
 struct nodosComparados{

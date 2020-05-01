@@ -13,6 +13,7 @@
 // que se piden en la práctica. Tiene como entrada la información de los
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
+	/*
 	Action accion = actIDLE;
 	// Estoy en el nivel 1
 
@@ -39,25 +40,10 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	accion = plan.front();
   return accion; 
+*/
 
 
-	/* mapaResultado[sensores.posF][sensores.posC] = sensores.terreno[0];
-	switch (sensores.sentido){
-		case norte: mapaResultado[sensores.posF - 1][sensores.posC] = sensores.terreno[2];
-		break;
-
-		case este: mapaResultado[sensores.posF][sensores.posC + 1] = sensores.terreno[2];
-		break;
-
-		case sur: mapaResultado[sensores.posF + 1][sensores.posC] = sensores.terreno[2];
-		break;
-
-		case oeste: mapaResultado[sensores.posF][sensores.posC - 1] = sensores.terreno[2];
-		break;
-
-} 
-
-	updateMapa(actual, sensores.terreno);//
+	//updateMapa(actual, sensores.terreno);
 	
 
 	if(!hayplan){
@@ -88,7 +74,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	}
 	return sigAccion;
 
-*/
+
 
 }
 
@@ -391,7 +377,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 	current.secuencia.empty();
 	current.peso = 0;
 	current.st.recorrido=0;
-	current.f = 0;
+	
 
 	cola.insert(current);
 	generados.insert(current.st);
