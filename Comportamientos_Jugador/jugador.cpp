@@ -7,7 +7,7 @@
 #include <set>
 #include <stack>
 #include <queue>
-//tareas de hacer el metodo para buscar botas, push,push
+//tareas de hacer el metodo para buscar botas, push
 
 
 // Este es el método principal que debe contener los 4 Comportamientos_Jugador
