@@ -55,9 +55,6 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	st.columna = col;
 	st.orientacion = brujula;
 	
-	//Marcar si paso por bikini o zapatillas
-	if (sensores.terreno[0]=='K') bikini = true;
-	if (sensores.terreno[0]=='D') zapatillas = true;
 
 	/* estado st2 = st;
 	if (plan.front() == actFORWARD and (HayObstaculoDelante(st2) or sensores.superficie[2]!='_')){
@@ -69,6 +66,9 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		}
   } */
 
+	
+	if(sensores.terreno[2] == 'P' || sensores.terreno[2]=='M' or sensores.terreno[2] =='D')
+		hayplan = false;
 
 	if(!hayplan){
 		/* actual.fila = sensores.posF;
@@ -100,8 +100,7 @@ Action ComportamientoJugador::think(Sensores sensores) {
 				hayplan = pathFinding(sensores.nivel, actual, destino, plan);
 				updateMapa(actual, sensores.terreno);//
 
-				//sigAccion = plan.front();
-		
+				//sigAccion = plan.front()
 
 	}
 	return sigAccion;
@@ -166,7 +165,7 @@ bool ComportamientoJugador::HayObstaculoDelante(estado &st){
 	// Miro si en esa casilla hay un obstaculo infranqueable
 	if (!EsObstaculo(mapaResultado[fil][col])){
 		// No hay obstaculo, actualizo el parámetro st poniendo la casilla de delante.
-    st.fila = fil;
+    	st.fila = fil;
 		st.columna = col;
 		return false;
 	}
