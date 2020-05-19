@@ -14,34 +14,6 @@
 // que se piden en la práctica. Tiene como entrada la información de los
 // sensores y devuelve la acción a realizar.
 Action ComportamientoJugador::think(Sensores sensores) {
-	/*
-	Action accion = actIDLE;
-	// Estoy en el nivel 1
-
-	 actual.fila        = sensores.posF;   //es un estado
-	actual.columna     = sensores.posC;
-	actual.orientacion = sensores.sentido;
-
-	cout << "Fila: " << actual.fila << endl;
-	cout << "Col : " << actual.columna << endl;
-	cout << "Ori : " << actual.orientacion << endl;
-
-	destino.fila       = sensores.destinoF;
-	destino.columna    = sensores.destinoC; 
-
-	 if (sensores.nivel != 4){
-		bool hay_plan = pathFinding (sensores.nivel, actual, destino, plan);
-	}
-	else { 
-		// Estoy en el nivel 2
-
-	//mapaResultado(sensores.posF)
-
-		cout << "Nivel 2 en procesito" << endl;
-	}
-	accion = plan.front();
-  return accion; 
-*/
 		estado st;
 
 		//Para saber donde estoy en todo momento
@@ -51,31 +23,15 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		destino.fila = sensores.destinoF;
 		destino.columna = sensores.destinoC;
 
-	st.fila = fil;
-	st.columna = col;
-	st.orientacion = brujula;
-	
-
-	/* estado st2 = st;
-	if (plan.front() == actFORWARD and (HayObstaculoDelante(st2) or sensores.superficie[2]!='_')){
-		if (sensores.superficie[2]!='_'){
-			plan.push_front(actIDLE);
-		}
-		else {
-			hayplan = false;
-		}
-  } */
-
+		st.fila = fil;
+		st.columna = col;
+		st.orientacion = brujula;
+		
 	
 	if(sensores.terreno[2] == 'P' || sensores.terreno[2]=='M' or sensores.terreno[2] =='D')
 		hayplan = false;
 
 	if(!hayplan){
-		/* actual.fila = sensores.posF;
-		actual.columna = sensores.posC;
-		actual.orientacion = sensores.sentido;
-		destino.fila = sensores.destinoF;
-		destino.columna = sensores.destinoC; */
 		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
 	}
 
@@ -91,17 +47,12 @@ Action ComportamientoJugador::think(Sensores sensores) {
 	if( hayplan && plan.size()>0){
 		sigAccion = plan.front();
 		plan.erase(plan.begin());
-		updateMapa(actual, sensores.terreno);//
-		updateEstadoActual(actual, sigAccion);//
+		updateMapa(actual, sensores.terreno);
+		updateEstadoActual(actual, sigAccion);
 	}
-	else
-	{
-						
-				hayplan = pathFinding(sensores.nivel, actual, destino, plan);
-				updateMapa(actual, sensores.terreno);//
-
-				//sigAccion = plan.front()
-
+	else{		
+		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+		updateMapa(actual, sensores.terreno);
 	}
 	return sigAccion;
 
