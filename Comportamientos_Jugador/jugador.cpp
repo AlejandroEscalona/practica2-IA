@@ -126,7 +126,6 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 						break;
 		case 4: cout << "Busqueda para el reto\n";
 					return pathFinding_CostoUniforme(origen,destino,plan);
-						// Incluir aqui la llamada al algoritmo de búsqueda usado en el nivel 2
 						break;
 	}
 	cout << "Comportamiento sin implementar\n";
