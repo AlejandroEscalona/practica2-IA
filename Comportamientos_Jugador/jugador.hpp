@@ -55,6 +55,7 @@ class ComportamientoJugador : public Comportamiento {
       hayplan=false;
       zapatillas = false;
       bikini = false;
+    
     }
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
     ~ComportamientoJugador(){}
@@ -71,6 +72,8 @@ class ComportamientoJugador : public Comportamiento {
     list<Action> plan;
     bool hayplan;
     bool bikini, zapatillas;
+    bool bateria = false; // cambiar
+    bool estoy_llendo_bateria = false; // cambiar
 
     // Métodos privados de la clase
     bool pathFinding(int level, const estado &origen, const estado &destino, list<Action> &plan);
