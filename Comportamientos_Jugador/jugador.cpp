@@ -348,7 +348,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 	//Borro la lista
 	cout << "Calculando plan\n";
 	plan.clear();
-	multiset<nodoPonderado, ComparaEstadosNodoPonderados> cola;											
+	multiset<nodoPonderado, ComparaEstadosNodoPonderados> cola_multiset;											
 	set<estadoPonderado,ComparaEstadosPonderados> generados;      	
 	set<estadoPonderado,ComparaEstadosPonderados> seleccion;
 	
@@ -360,12 +360,12 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 	current.st.recorrido=0;
 	
 
-	cola.insert(current);
+	cola_multiset.insert(current);
 	generados.insert(current.st);
 	
-  while (!cola.empty() and (current.st.st.fila!=destino.fila or current.st.st.columna != destino.columna)){
+  while (!cola_multiset.empty() and (current.st.st.fila!=destino.fila or current.st.st.columna != destino.columna)){
 
-		cola.erase(cola.begin());
+		cola_multiset.erase(cola_multiset.begin());
 		generados.erase(generados.find(current.st));
 
 
@@ -384,12 +384,12 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 			hijoTurnR.peso+=peso;
 			hijoTurnR.st.recorrido+=peso;
 			auto iterator = generados.find(hijoTurnR.st);
-			if(iterator == generados.end() )
+			if(iterator == generados.end() )    //Comprobamos que no este en generados y lo insertamos
 			{
-				cola.insert(hijoTurnR);
+				cola_multiset.insert(hijoTurnR);
 				generados.insert(hijoTurnR.st);
 			}
-			else if (hijoTurnR.st.recorrido < iterator->recorrido ){
+			else if (hijoTurnR.st.recorrido < iterator->recorrido ){  //Si esta, comprobamos el coste de su recorrido por si lo mejoramos.
 				generados.erase(iterator);
 				generados.insert(hijoTurnR.st);
 
@@ -405,12 +405,12 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 			hijoTurnL.peso+=peso;
 			hijoTurnL.st.recorrido+=peso;
 			auto iterator = generados.find(hijoTurnL.st);
-			if(iterator == generados.end() )
+			if(iterator == generados.end() ) //Comprobamos que no este en generados y lo insertamos
 			{
-				cola.insert(hijoTurnL);
+				cola_multiset.insert(hijoTurnL);
 				generados.insert(hijoTurnL.st);
 			}
-			else if (hijoTurnL.st.recorrido < iterator->recorrido ){
+			else if (hijoTurnL.st.recorrido < iterator->recorrido ){ //Si esta, comprobamos el coste de su recorrido por si lo mejoramos.
 				generados.erase(iterator);
 				generados.insert(hijoTurnL.st);
 
@@ -428,7 +428,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 				auto iterator = generados.find(hijoForward.st);
 				if(iterator == generados.end() )
 				{
-					cola.insert(hijoForward);
+					cola_multiset.insert(hijoForward);
 					generados.insert(hijoForward.st);
 				}
 				else if (hijoForward.st.recorrido < iterator->recorrido ){
@@ -439,7 +439,7 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 			}
 		}
 		
-		current = (*cola.begin());
+		current = (*cola_multiset.begin());
 	}
 
   cout << "Terminada la busqueda por Coste Uniforme\n";
