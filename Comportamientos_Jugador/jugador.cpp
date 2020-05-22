@@ -6,7 +6,6 @@
 #include <set>
 #include <stack>
 #include <queue>
-estado recarga;
 
 // Este es el método principal que debe contener los 4 Comportamientos_Jugador
 // que se piden en la práctica. Tiene como entrada la información de los
@@ -15,83 +14,44 @@ Action ComportamientoJugador::think(Sensores sensores) {
 		estado st;
 
 		//Para saber donde estoy en todo momento
-		
-		st.fila = fil;
-		st.columna = col;
-		st.orientacion = brujula;
-
-	
-	
-		if((sensores.bateria < 2300) && bateria && !estoy_llendo_bateria ){ // cambiar
-				estoy_llendo_bateria=true;
-				destino.fila = recarga.fila;
-				destino.columna = recarga.columna;
-				hayplan=false;
-				
-		}	
-	
-	if(sensores.posF == destino.fila && sensores.posC == destino.columna)
-		hayplan = false;
-
-	if(!hayplan){
-
 		actual.fila = sensores.posF;
 		actual.columna = sensores.posC;
 		actual.orientacion = sensores.sentido;
+		destino.fila = sensores.destinoF;
+		destino.columna = sensores.destinoC;
 
-		if(!estoy_llendo_bateria){
-			destino.fila = sensores.destinoF;
-			destino.columna = sensores.destinoC;
-				
-		}
-		else{
-			if(estoy_llendo_bateria && (sensores.posF == recarga.fila && sensores.posC == recarga.columna)){//cambiar
-			while(sensores.bateria < 2900)
-					return actTURN_R;
-
-			estoy_llendo_bateria=false; //cambiar
-			}
-		}
+		st.fila = fil;
+		st.columna = col;
+		st.orientacion = brujula;
 		
-		if(!estoy_llendo_bateria){ // cambiar
-			destino.fila = sensores.destinoF;
-			destino.columna = sensores.destinoC;
-				
-		}
-		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+	
+	if(sensores.terreno[2] == 'P' || sensores.terreno[2]=='M' ){
+		hayplan = false;
 		
 	}
+	if(!hayplan){
+		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
+	}
 
-	
-	/* // Nuevo objetivo marcado.
+	// Nuevo objetivo marcado.
 	if (hayplan and (sensores.destinoF != destino.fila or sensores.destinoC != destino.columna)){
 		//cout << "El destino ha cambiado\n";
 		hayplan = false;
 		destino.fila = sensores.destinoF;
 		destino.columna = sensores.destinoC;
 	}
- */
-	
 
-
-	Action sigAccion;
+	Action sigAccion;	
 	if( hayplan && plan.size()>0){
-
 		sigAccion = plan.front();
-		
-		if(sensores.terreno[2] == 'P' || sensores.terreno[2]=='M' or sensores.terreno[2] =='D'){
-		
-		hayplan = false;
-		}
 		plan.erase(plan.begin());
 		updateMapa(actual, sensores.terreno);
 		updateEstadoActual(actual, sigAccion);
-		cout << recarga.columna << " fila:   "<< recarga.fila << endl;
 	}
-	/*else{		
+	else{		
 		hayplan = pathFinding(sensores.nivel, actual, destino, plan);
 		updateMapa(actual, sensores.terreno);
-	}*/
+	}
 	return sigAccion;
 
 
@@ -126,7 +86,7 @@ bool ComportamientoJugador::pathFinding (int level, const estado &origen, const 
 // Dado el código en carácter de una casilla del mapa dice si se puede
 // pasar por ella sin riegos de morir o chocar.
 bool EsObstaculo(unsigned char casilla){
-	if (casilla=='P' or casilla=='M' or casilla =='D')
+	if (casilla=='P' or casilla=='M' )
 		return true;
 	else
 	  return false;
@@ -375,6 +335,8 @@ int ComportamientoJugador::calcularPeso( nodoPonderado &nodo){
 		 		 if(!nodo.zapatillas)peso = 50;
 				 else{peso=5;}
 		  		 break;
+		case 'X': peso = -5;
+				 break;
 		default: peso = 1; break;
 	}
 	return peso;
@@ -502,85 +464,84 @@ bool ComportamientoJugador::pathFinding_CostoUniforme(const estado &origen, cons
 
 //metodo para ir explorando el mapa
 void ComportamientoJugador::updateMapa(estado &st, vector<unsigned char> vector){
-	mapaResultado[st.fila][st.columna] = vector[0]; if(vector[0] == 'X'){recarga.fila = st.fila; recarga.columna = st.columna;bateria=true;};
+	mapaResultado[st.fila][st.columna] = vector[0];
 	if(st.fila > 0 and st.fila < (mapaResultado.size()) and st.columna > 0 and st.fila < (mapaResultado.size())){
-		
 		switch (st.orientacion) {
 			case 0:
-				mapaResultado[st.fila-1][st.columna-1] = vector[1]; if(vector[1] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna] = vector[2];  if(vector[2] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna;bateria=true; };
-				mapaResultado[st.fila-1][st.columna+1] = vector[3];  if(vector[3] == 'X'){recarga.fila = st.fila+1; recarga.columna = st.columna+1;bateria=true; };
-				
-				mapaResultado[st.fila-2][st.columna-2] = vector[4]; if(vector[4] == 'X'){recarga.fila = st.fila-2; recarga.columna = st.columna-2;bateria=true; };
-				mapaResultado[st.fila-2][st.columna-1] = vector[5]; if(vector[5] == 'X'){recarga.fila = st.fila-2; recarga.columna = st.columna-1;bateria=true; };
-				mapaResultado[st.fila-2][st.columna] = vector[6]; if(vector[6] == 'X'){recarga.fila = st.fila-2; recarga.columna = st.columna;bateria=true; };
-				mapaResultado[st.fila-2][st.columna+1] = vector[7]; if(vector[7] == 'X'){recarga.fila = st.fila-2; recarga.columna = st.columna+1;bateria=true; };
-				mapaResultado[st.fila-2][st.columna+2] = vector[8]; if(vector[8] == 'X'){recarga.fila = st.fila-2; recarga.columna = st.columna+2;bateria=true; };
+				mapaResultado[st.fila-1][st.columna-1] = vector[1];
+				mapaResultado[st.fila-1][st.columna] = vector[2];
+				mapaResultado[st.fila-1][st.columna+1] = vector[3];
 
-				mapaResultado[st.fila-3][st.columna-3] = vector[9]; if(vector[9] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-3;bateria=true; };
-				mapaResultado[st.fila-3][st.columna-2] = vector[10]; if(vector[10] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-2;bateria=true; };
-				mapaResultado[st.fila-3][st.columna-1] = vector[11]; if(vector[11] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-1;bateria=true; };
-				mapaResultado[st.fila-3][st.columna] = vector[12];  if(vector[12] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna;bateria=true; };
-				mapaResultado[st.fila-3][st.columna+1] = vector[13];  if(vector[13] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-1;bateria=true; };
-				mapaResultado[st.fila-3][st.columna+2] = vector[14]; if(vector[14] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-2;bateria=true; };
-				mapaResultado[st.fila-3][st.columna+3] = vector[15]; if(vector[15] == 'X'){recarga.fila = st.fila-3; recarga.columna = st.columna-3;bateria=true; };
+				mapaResultado[st.fila-2][st.columna-2] = vector[4];
+				mapaResultado[st.fila-2][st.columna-1] = vector[5];
+				mapaResultado[st.fila-2][st.columna] = vector[6];
+				mapaResultado[st.fila-2][st.columna+1] = vector[7];
+				mapaResultado[st.fila-2][st.columna+2] = vector[8];
+
+				mapaResultado[st.fila-3][st.columna-3] = vector[9];
+				mapaResultado[st.fila-3][st.columna-2] = vector[10];
+				mapaResultado[st.fila-3][st.columna-1] = vector[11];
+				mapaResultado[st.fila-3][st.columna] = vector[12];
+				mapaResultado[st.fila-3][st.columna+1] = vector[13];
+				mapaResultado[st.fila-3][st.columna+2] = vector[14];
+				mapaResultado[st.fila-3][st.columna+3] = vector[15];
 				break;
 			case 1:
-				mapaResultado[st.fila-1][st.columna+1] = vector[1]; if(vector[1] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna+1] = vector[2]; if(vector[2] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna+1] = vector[3]; if(vector[3] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila-1][st.columna+1] = vector[1];
+				mapaResultado[st.fila][st.columna+1] = vector[2];
+				mapaResultado[st.fila+1][st.columna+1] = vector[3];
 
-				mapaResultado[st.fila-2][st.columna+2] = vector[4]; if(vector[4] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna+2] = vector[5]; if(vector[5] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna+2] = vector[6]; if(vector[6] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna+2] = vector[7]; if(vector[7] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna+2] = vector[8]; if(vector[8] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila-2][st.columna+2] = vector[4];
+				mapaResultado[st.fila-1][st.columna+2] = vector[5];
+				mapaResultado[st.fila][st.columna+2] = vector[6];
+				mapaResultado[st.fila+1][st.columna+2] = vector[7];
+				mapaResultado[st.fila+2][st.columna+2] = vector[8];
 
-				mapaResultado[st.fila-3][st.columna+3] = vector[9]; if(vector[9] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-2][st.columna+3] = vector[10]; if(vector[10] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna+3] = vector[11]; if(vector[11] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna+3] = vector[12]; if(vector[12] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna+3] = vector[13]; if(vector[13] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna+3] = vector[14]; if(vector[14] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna+3] = vector[15]; if(vector[15] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila-3][st.columna+3] = vector[9];
+				mapaResultado[st.fila-2][st.columna+3] = vector[10];
+				mapaResultado[st.fila-1][st.columna+3] = vector[11];
+				mapaResultado[st.fila][st.columna+3] = vector[12];
+				mapaResultado[st.fila+1][st.columna+3] = vector[13];
+				mapaResultado[st.fila+2][st.columna+3] = vector[14];
+				mapaResultado[st.fila+3][st.columna+3] = vector[15];
 				break;
 			case 2:
-				mapaResultado[st.fila+1][st.columna+1] = vector[1]; if(vector[1] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna] = vector[2]; if(vector[2] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna-1] = vector[3]; if(vector[3] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+1][st.columna+1] = vector[1];
+				mapaResultado[st.fila+1][st.columna] = vector[2];
+				mapaResultado[st.fila+1][st.columna-1] = vector[3];
 
-				mapaResultado[st.fila+2][st.columna+2] = vector[4]; if(vector[4] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna+1] = vector[5]; if(vector[5] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna] = vector[6]; if(vector[6] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna-1] = vector[7]; if(vector[7] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna-2] = vector[8]; if(vector[8] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+2][st.columna+2] = vector[4];
+				mapaResultado[st.fila+2][st.columna+1] = vector[5];
+				mapaResultado[st.fila+2][st.columna] = vector[6];
+				mapaResultado[st.fila+2][st.columna-1] = vector[7];
+				mapaResultado[st.fila+2][st.columna-2] = vector[8];
 
-				mapaResultado[st.fila+3][st.columna+3] = vector[9]; if(vector[9] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna+2] = vector[10]; if(vector[10] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna+1] = vector[11]; if(vector[11] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna] = vector[12];if(vector[12] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; }; 
-				mapaResultado[st.fila+3][st.columna-1] = vector[13];if(vector[13] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna-2] = vector[14]; if(vector[14] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+3][st.columna-3] = vector[15]; if(vector[15] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+3][st.columna+3] = vector[9];
+				mapaResultado[st.fila+3][st.columna+2] = vector[10];
+				mapaResultado[st.fila+3][st.columna+1] = vector[11];
+				mapaResultado[st.fila+3][st.columna] = vector[12];
+				mapaResultado[st.fila+3][st.columna-1] = vector[13];
+				mapaResultado[st.fila+3][st.columna-2] = vector[14];
+				mapaResultado[st.fila+3][st.columna-3] = vector[15];
 				break;
 			case 3:
-				mapaResultado[st.fila+1][st.columna-1] = vector[1]; if(vector[1] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna-1] = vector[2];if(vector[2] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna-1] = vector[3];if(vector[3] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+1][st.columna-1] = vector[1];
+				mapaResultado[st.fila][st.columna-1] = vector[2];
+				mapaResultado[st.fila-1][st.columna-1] = vector[3];
 
-				mapaResultado[st.fila+2][st.columna-2] = vector[4];if(vector[4] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna-2] = vector[5];if(vector[5] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna-2] = vector[6];if(vector[6] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna-2] = vector[7];if(vector[7] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-2][st.columna-2] = vector[8];if(vector[8] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+2][st.columna-2] = vector[4];
+				mapaResultado[st.fila+1][st.columna-2] = vector[5];
+				mapaResultado[st.fila][st.columna-2] = vector[6];
+				mapaResultado[st.fila-1][st.columna-2] = vector[7];
+				mapaResultado[st.fila-2][st.columna-2] = vector[8];
 
-				mapaResultado[st.fila+3][st.columna-3] = vector[9];if(vector[9] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+2][st.columna-3] = vector[10];if(vector[10] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila+1][st.columna-3] = vector[11];if(vector[11] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila][st.columna-3] = vector[12];if(vector[12] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-1][st.columna-3] = vector[13];if(vector[13] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-2][st.columna-3] = vector[14];if(vector[14] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
-				mapaResultado[st.fila-3][st.columna-3] = vector[15];if(vector[15] == 'X'){recarga.fila = st.fila-1; recarga.columna = st.columna-1; bateria=true; };
+				mapaResultado[st.fila+3][st.columna-3] = vector[9];
+				mapaResultado[st.fila+2][st.columna-3] = vector[10];
+				mapaResultado[st.fila+1][st.columna-3] = vector[11];
+				mapaResultado[st.fila][st.columna-3] = vector[12];
+				mapaResultado[st.fila-1][st.columna-3] = vector[13];
+				mapaResultado[st.fila-2][st.columna-3] = vector[14];
+				mapaResultado[st.fila-3][st.columna-3] = vector[15];
 				break;
 		}
 	}
